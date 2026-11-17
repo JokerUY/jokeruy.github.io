@@ -104,6 +104,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 .dc-text { flex: 1 1 280px; min-width: 0; }
 .dc-btn { display: inline-block; margin-top: .3rem; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; text-decoration: none; color: #EDE7D6; background: #7E221B; border: 1px solid #7E221B; padding: .55rem 1.1rem; transition: background .15s, border-color .15s; }
 .dc-btn:hover { background: #9A2A21; border-color: #9A2A21; }
+.mail-msg { margin-left: .8rem; font-family: var(--f-type); font-size: .8rem; color: var(--muted); }
 #mail-link { text-transform: none; letter-spacing: .02em; font-family: var(--f-type); font-size: .95rem; overflow-wrap: anywhere; }
 
 @media (max-width: 640px) {
@@ -202,7 +203,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     <section class="sec" id="contact">
       <h2 data-i18n="h.contact">Contacto para colaboraciones</h2>
       <p data-i18n="ct.text">Para colaboraciones, escríbeme por mail.</p>
-      <p><a class="btn" id="mail-link" href="#" rel="noopener"><span id="mail-text"></span></a></p>
+      <p><button type="button" class="btn" id="mail-link"><span id="mail-text"></span></button><span class="mail-msg" id="mail-msg" aria-live="polite"></span></p>
     </section>
 
   </div></div>
@@ -233,7 +234,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "ditman.p2": "The 2027 edition starts in January, with qualifiers open from December 26.",
     "ditman.link": "See the Ditman Cup 2027 website",
     "h.contact": "Contact for collaborations",
-    "ct.text": "For collaborations, email me."
+    "ct.text": "For collaborations, send me an email."
   };
   var nodes = document.querySelectorAll('[data-i18n]');
   var ES = {};
@@ -242,13 +243,33 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 
   // Correo: se arma aqui para no dejarlo escrito completo en el HTML
   var MAIL = ['nicoperez1514', 'gmail.com'];
+  var MSG = { es: { hint: 'Clic para copiar', ok: 'Copiado', fail: 'No se pudo copiar: selecciona el texto' }, en: { hint: 'Click to copy', ok: 'Copied', fail: 'Could not copy: select the text' } };
+  var msgTimer = null;
+  function lang() { return document.documentElement.lang === 'en' ? 'en' : 'es'; }
   function setMail() {
-    var a = document.getElementById('mail-link'), t = document.getElementById('mail-text');
-    if (!a || !t) return;
-    var addr = MAIL[0] + '@' + MAIL[1];
-    a.href = 'mailto:' + addr + '?subject=' + encodeURIComponent(document.documentElement.lang === 'en' ? 'Collaboration with JokerUY' : 'Colaboración con JokerUY');
-    t.textContent = addr;
+    var t = document.getElementById('mail-text'), m = document.getElementById('mail-msg');
+    if (!t || !m) return;
+    t.textContent = MAIL[0] + '@' + MAIL[1];
+    m.textContent = MSG[lang()].hint;
   }
+  function copyMail() {
+    var addr = MAIL[0] + '@' + MAIL[1], m = document.getElementById('mail-msg');
+    function done(ok) {
+      m.textContent = MSG[lang()][ok ? 'ok' : 'fail'];
+      clearTimeout(msgTimer);
+      msgTimer = setTimeout(function () { m.textContent = MSG[lang()].hint; }, 2500);
+    }
+    function legacy() {
+      var ta = document.createElement('textarea');
+      ta.value = addr; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(function () { done(true); }, legacy);
+    else legacy();
+  }
+  document.getElementById('mail-link').addEventListener('click', copyMail);
   // Fila de datos: sale de data/speedrun.json (lo genera scripts/update-speedrun.js). Si no carga, queda oculta.
   function renderData() {
     if (!SR || !SR.stats) return;
