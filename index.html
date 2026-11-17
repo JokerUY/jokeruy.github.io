@@ -1,0 +1,457 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="icon" href="assets/avatar.jpg">
+<title>JokerUY</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="JokerUY: speedrunner de Resident Evil de Montevideo, Uruguay. Récords mundiales, torneos y canales.">
+<style>
+/* Layout: una sola columna centrada, estilo menú de RE4 (mismo sistema visual que la Ditman Cup). Tema oscuro único, a propósito. */
+@font-face {
+  font-family: 'Biohazard Game Font';
+  src: url('assets/REBiohazard.otf') format('opentype');
+  unicode-range: U+0022-0026,U+0029,U+002E-0039,U+003D,U+0040-005A,U+005E,U+0061-007B,U+00A7,U+00B2,U+00E4,U+00F6,U+00FC,U+2013,U+2212,U+0020;
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'RE4 Remake';
+  src: url('assets/RE4Remake.ttf') format('truetype');
+  unicode-range: U+0021-005D,U+005F-007E,U+00A3-00A9,U+00AB-00B1,U+00B4,U+00B6-00B8,U+00BB,U+00D7,U+00F7,U+0131,U+2013-2014,U+2018-201A,U+201C-201E,U+2020-2022,U+2026,U+2039-203A,U+2044,U+20AC,U+0020;
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'Virgula Vulgaris';
+  src: url('assets/VirgulaVulgaris-Bold.ttf') format('truetype');
+  font-weight: 700; font-display: swap;
+}
+:root {
+  color-scheme: dark;
+  --bg: #0A0908;
+  --surface: #16130F;
+  --surface-alt: #201C16;
+  --text: #E7E2D6;
+  --text-dim: #B3AB9C;
+  --text-muted: #7D766A;
+  --accent: #B5271C;
+  --accent-bright: #E1462C;
+  --gold: #C9A961;
+  --border: #3B342A;
+  --frame: #7A6A49;
+  --font-display: 'Biohazard Game Font', 'Virgula Vulgaris', 'RE4 Remake', 'Times New Roman', serif;
+  --font-title: 'RE4 Remake', 'Virgula Vulgaris', 'Segoe UI', system-ui, sans-serif;
+  --font-grunge: 'Virgula Vulgaris', 'RE4 Remake', cursive;
+  --font-safe: 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { font-size: 112.5%; }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-safe);
+  line-height: 1.6;
+  background-color: var(--bg);
+  background-image: linear-gradient(rgba(10, 9, 8, .9), rgba(10, 9, 8, .985)), url('assets/fondo1.jpeg');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: var(--accent-bright); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
+  background: linear-gradient(rgba(10, 9, 8, .96), rgba(10, 9, 8, .88));
+  border-bottom: 1px solid var(--border);
+}
+.topbar-inner, main, footer .inner {
+  max-width: 980px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding-block: .6rem; }
+.brand { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: .06em; color: var(--text); text-decoration: none; }
+.lang { display: flex; gap: .3rem; }
+.lang button {
+  font-family: var(--font-title); letter-spacing: .08em; font-size: .85rem;
+  background: transparent; color: var(--text-dim);
+  border: 1px solid var(--border); border-radius: 2px; padding: .25rem .6rem; cursor: pointer;
+}
+.lang button[aria-pressed="true"] { color: #fff; border-color: var(--accent); background: rgba(181, 39, 28, .22); }
+
+main { padding-block: 0 3.5rem; }
+
+.hero { text-align: center; padding: 3rem 0 2.2rem; border-bottom: 1px solid var(--border); }
+.avatar {
+  width: 148px; height: 148px; object-fit: cover; display: block; margin: 0 auto 1.2rem;
+  border: 1px solid var(--frame); border-radius: 2px;
+  box-shadow: inset 0 0 0 1px #000, 0 6px 28px rgba(181, 39, 28, .35);
+}
+h1 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2.6rem, 9vw, 4.2rem); letter-spacing: .05em; line-height: 1.05;
+  margin: 0 0 .4rem; text-shadow: 0 2px 30px rgba(181, 39, 28, .55);
+}
+.tagline { font-family: var(--font-grunge); color: var(--text-dim); font-size: 1.15rem; margin: 0 auto 1.6rem; max-width: 34rem; }
+.links { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+.links a {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--font-title); letter-spacing: .08em; text-transform: uppercase; font-size: .95rem;
+  text-decoration: none; color: var(--text);
+  border: 1px solid var(--frame); border-radius: 2px; padding: .55rem 1.1rem;
+  transition: background .15s, border-color .15s;
+}
+.links a:hover { background: rgba(181, 39, 28, .18); border-color: var(--accent-bright); color: #fff; }
+.links a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.links a.primary:hover { background: var(--accent-bright); border-color: var(--accent-bright); }
+.ic { width: 1.15em; height: 1.15em; flex: none; }
+[hidden] { display: none !important; }
+#rec-stats { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .7rem; }
+#rec-stats .record { padding: .8rem .9rem; }
+.records .record-num { font-family: var(--font-title); font-size: 1.9rem; color: var(--accent-bright); line-height: 1.15; }
+.records .record-game { font-size: 1.05rem; line-height: 1.3; }
+.filter { display: flex; gap: .4rem; flex-wrap: wrap; margin: 1.4rem 0 .8rem; }
+.filter button {
+  font-family: var(--font-title); letter-spacing: .08em; font-size: .85rem; text-transform: uppercase;
+  background: transparent; color: var(--text-dim);
+  border: 1px solid var(--border); border-radius: 2px; padding: .35rem .8rem; cursor: pointer;
+}
+.filter button[aria-pressed="true"] { color: #fff; border-color: var(--accent); background: rgba(181, 39, 28, .22); }
+.note { color: var(--text-muted); font-size: .85rem; margin: .7rem 0 0; }
+.results td a { color: var(--text); text-decoration-color: var(--frame); text-underline-offset: 3px; font-variant-numeric: tabular-nums; }
+.results td a:hover { color: var(--accent-bright); }
+.results td .sub { display: block; color: var(--text-muted); font-size: .82rem; }
+.results td.time { white-space: nowrap; font-weight: 600; }
+.results td.date { white-space: nowrap; color: var(--text-dim); }
+.badge-wr { font-family: var(--font-title); letter-spacing: .08em; font-size: .8rem; color: var(--bg); background: var(--gold); border-radius: 2px; padding: .05rem .4rem; margin-left: .35rem; }
+.facts { display: flex; justify-content: center; gap: 1.2rem 2.6rem; flex-wrap: wrap; }
+.fact { display: flex; flex-direction: column; align-items: center; }
+.fact-number { font-family: var(--font-title); font-size: 1.7rem; color: var(--accent-bright); line-height: 1.2; }
+.fact-label { font-family: var(--font-grunge); color: var(--text-dim); font-size: 1rem; }
+
+section { padding-top: 2.6rem; }
+h2 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(1.45rem, 4vw, 1.9rem); letter-spacing: .04em; line-height: 1.15;
+  border-left: 3px solid var(--accent); padding-left: .6rem; margin: 0 0 1.1rem;
+  text-wrap: balance;
+}
+.lead { color: var(--text-dim); max-width: 62ch; margin: -.3rem 0 1.2rem; }
+
+.records { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+.record {
+  border: 1px solid var(--frame); border-radius: 2px; padding: 1.1rem 1.1rem 1rem;
+  background: linear-gradient(rgba(22, 19, 15, .92), rgba(10, 8, 6, .9));
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .55), inset 0 0 26px rgba(0, 0, 0, .5);
+}
+.record-tag { font-family: var(--font-grunge); color: var(--gold); font-size: .95rem; letter-spacing: .04em; }
+.record-game { font-family: var(--font-title); font-size: 1.35rem; letter-spacing: .03em; margin-top: .2rem; }
+
+.results { width: 100%; border-collapse: collapse; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 2px; background: rgba(22, 19, 15, .75); }
+.results th, .results td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.results tr:last-child td { border-bottom: 0; }
+.results th { font-family: var(--font-title); font-weight: 400; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; color: var(--text-muted); }
+.results td.prize { font-family: var(--font-safe); font-weight: 600; color: var(--gold); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+.results th.prize { text-align: right; }
+.results td.place { white-space: nowrap; color: var(--text-dim); }
+.place.first { color: var(--accent-bright); }
+.group-label {
+  font-family: var(--font-title); letter-spacing: .12em; text-transform: uppercase; font-size: .9rem;
+  color: var(--accent-bright); margin: 1.6rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--frame);
+}
+.group-label:first-of-type { margin-top: 0; }
+
+.panel {
+  border: 1px solid var(--frame); border-radius: 2px; padding: 1.2rem 1.3rem;
+  background: rgba(22, 19, 15, .85);
+}
+.panel h3 { font-family: var(--font-title); font-weight: 400; font-size: 1.3rem; letter-spacing: .03em; margin: 0 0 .4rem; }
+.panel p { margin: 0 0 .6rem; color: var(--text-dim); }
+.panel p:last-child { margin-bottom: 0; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+.cols > * { min-width: 0; }
+.list { margin: 0; padding-left: 1.1rem; color: var(--text-dim); }
+.list li { margin-bottom: .35rem; }
+.list li::marker { color: var(--accent); }
+
+footer { border-top: 1px solid var(--border); background: rgba(10, 9, 8, .75); }
+footer .inner { padding-block: 2rem; text-align: center; color: var(--text-muted); font-family: var(--font-grunge); }
+footer .links { margin-bottom: 1rem; }
+
+@media (max-width: 520px) {
+  html { font-size: 106%; }
+  .results th, .results td { padding: .55rem .6rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head><body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ic-twitch" viewBox="0 0 24 24"><path fill="currentColor" d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></symbol>
+  <symbol id="ic-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol>
+  <symbol id="ic-src" viewBox="0 0 24 24"><path fill="currentColor" d="M5 3h14v2h3v3a5 5 0 0 1-4.4 4.96A6 6 0 0 1 13 16.9V19h3v2H8v-2h3v-2.1a6 6 0 0 1-4.6-3.94A5 5 0 0 1 2 8V5h3V3zm0 4H4v1a3 3 0 0 0 1.1 2.3A6 6 0 0 1 5 9V7zm14 0v2a6 6 0 0 1-.1 1.3A3 3 0 0 0 20 8V7h-1z"/></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">JokerUY</a>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" id="lang-es" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" id="lang-en" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <img class="avatar" src="assets/avatar.jpg" alt="Logo del canal de JokerUY" width="148" height="148">
+    <h1>JokerUY</h1>
+    <p class="tagline" data-i18n="tagline">Speedrunner de Resident Evil · Montevideo, Uruguay</p>
+    <div class="links">
+      <a class="primary" href="https://www.twitch.tv/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-twitch"/></svg>Twitch</a>
+      <a href="https://www.youtube.com/@jokeruy" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-youtube"/></svg>YouTube</a>
+      <a href="https://www.speedrun.com/users/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-src"/></svg>speedrun.com</a>
+    </div>
+    <div class="facts">
+      <div class="fact" id="fact-wr" hidden><span class="fact-number" id="fact-wr-n"></span><span class="fact-label" data-i18n="fact.wr">récords mundiales</span></div>
+      <div class="fact"><span class="fact-number" data-i18n="fact.partner.n">Partner</span><span class="fact-label" data-i18n="fact.partner">de Twitch desde abril de 2026</span></div>
+      <div class="fact"><span class="fact-number" data-i18n="fact.yt.n">Socio</span><span class="fact-label" data-i18n="fact.yt">de YouTube</span></div>
+    </div>
+  </div>
+
+  <section id="records" hidden>
+    <h2 data-i18n="h.records">Récords y mejores tiempos</h2>
+    <p class="lead" data-i18n="records.lead">Datos de mi perfil de speedrun.com, con link a cada run.</p>
+    <div class="records" id="rec-stats"></div>
+    <div class="filter" role="group" aria-label="Filtro / Filter">
+      <button type="button" id="rec-f-wr" aria-pressed="true"></button>
+      <button type="button" id="rec-f-all" aria-pressed="false"></button>
+    </div>
+    <div class="table-wrap">
+      <table class="results" id="rec-table">
+        <thead><tr><th data-i18n="th.game">Juego</th><th data-i18n="th.category">Categoría</th><th data-i18n="th.time">Tiempo</th><th data-i18n="th.rank">Puesto</th><th data-i18n="th.date">Fecha</th></tr></thead>
+        <tbody id="rec-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="rec-note"></p>
+  </section>
+
+  <section id="results">
+    <h2 data-i18n="h.results">Torneos y desafíos</h2>
+    <p class="lead" data-i18n="results.lead">Resultados en torneos y desafíos de speedrun, con el premio ganado.</p>
+
+    <div class="group-label" data-i18n="g.tournaments">Torneos</div>
+    <div class="table-wrap">
+      <table class="results">
+        <thead><tr><th data-i18n="th.event">Evento</th><th data-i18n="th.result">Resultado</th><th class="prize" data-i18n="th.prize">Premio</th></tr></thead>
+        <tbody>
+          <tr><td>Ditman Cup 2026 (RE4)</td><td class="place first" data-i18n="r.1st">1.er puesto</td><td class="prize">USD 627</td></tr>
+          <tr><td>Basement Cup 2025 (RE3)</td><td class="place first" data-i18n="r.1st">1.er puesto</td><td class="prize">USD 150</td></tr>
+          <tr><td data-i18n="ev.sneevil">RE9: Requiem, clasificatoria del torneo de Sneevil</td><td class="place" data-i18n="r.top2">Top 2</td><td class="prize">USD 150</td></tr>
+          <tr><td data-i18n="ev.reps.team">R.E.P.S (RE4), carrera por equipos</td><td class="place first" data-i18n="r.1st">1.er puesto</td><td class="prize">USD 200</td></tr>
+          <tr><td data-i18n="ev.reps.four">R.E.P.S (RE4), carrera de 4 runners</td><td class="place first" data-i18n="r.1st">1.er puesto</td><td class="prize">USD 190</td></tr>
+          <tr><td>R.E.P.S (RE4)</td><td class="place first" data-i18n="r.1st">1.er puesto</td><td class="prize">USD 100</td></tr>
+          <tr><td>R.E.P.S (RE9)</td><td class="place first" data-i18n="r.1st">1.er puesto</td><td class="prize">USD 100</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-label" data-i18n="g.challenges">Desafíos de speedrun</div>
+    <div class="table-wrap">
+      <table class="results">
+        <thead><tr><th data-i18n="th.challenge">Desafío</th><th class="prize" data-i18n="th.prize">Premio</th></tr></thead>
+        <tbody>
+          <tr><td>MoistCr1TiKaL Speedrun Challenge</td><td class="prize">USD 500</td></tr>
+          <tr><td>GoE Speedrun Challenge</td><td class="prize">USD 300</td></tr>
+          <tr><td>Van Wheel Gone Speedrun Challenge</td><td class="prize">USD 200</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 data-i18n="h.about">Sobre el canal</h2>
+    <div class="cols">
+      <div class="panel">
+        <h3 data-i18n="about.content.h">Contenido</h3>
+        <p data-i18n="about.content">Speedruns de toda la saga Resident Evil: intentos de récord, carreras y torneos. Streams largos en Twitch y YouTube a la vez, que suelen empezar entre las 16 y las 17 h (Uruguay, UTC-3).</p>
+        <p data-i18n="about.yt">En YouTube subo mis mejores tiempos y tutoriales.</p>
+      </div>
+      <div class="panel">
+        <h3 data-i18n="about.community.h">Comunidad</h3>
+        <p data-i18n="about.community">La comunidad del canal se llama xddArmy. La compartimos con otros streamers de speedrun de habla hispana.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ditman">
+    <h2 data-i18n="h.ditman">Organizador de la Ditman Cup</h2>
+    <div class="panel">
+      <h3>Ditman Cup</h3>
+      <p data-i18n="ditman.p1">Torneo internacional de speedrun de Resident Evil 4 hecho por la comunidad. Soy uno de los organizadores, armé la página del torneo y gané la edición 2026.</p>
+      <p data-i18n="ditman.p2">La edición 2027 empieza en enero, con clasificatorias abiertas desde el 26 de diciembre.</p>
+      <p><a href="https://ditmancup.github.io/DitmanCup-2027/" target="_blank" rel="noopener" data-i18n="ditman.link">Ver la página de la Ditman Cup 2027</a></p>
+    </div>
+  </section>
+
+  <section id="collabs">
+    <h2 data-i18n="h.collabs">Colaboraciones</h2>
+    <ul class="list">
+      <li data-i18n="collab.gfn">GeForce NOW Powered by ABYA: serie de shorts para YouTube (2026).</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="inner">
+    <div class="links">
+      <a class="primary" href="https://www.twitch.tv/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-twitch"/></svg>Twitch</a>
+      <a href="https://www.youtube.com/@jokeruy" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-youtube"/></svg>YouTube</a>
+      <a href="https://www.speedrun.com/users/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-src"/></svg>speedrun.com</a>
+      <a href="https://ditmancup.github.io/DitmanCup-2027/" target="_blank" rel="noopener">Ditman Cup</a>
+    </div>
+    <p data-i18n="footer">JokerUY · Montevideo, Uruguay</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var EN = {
+    "tagline": "Resident Evil speedrunner · Montevideo, Uruguay",
+    "fact.wr": "world records",
+    "fact.partner.n": "Partner",
+    "fact.partner": "on Twitch since April 2026",
+    "fact.yt.n": "Partner",
+    "fact.yt": "on YouTube",
+    "h.records": "Records & best times",
+    "records.lead": "Data from my speedrun.com profile, with a link to each run.",
+    "th.game": "Game",
+    "th.category": "Category",
+    "th.time": "Time",
+    "th.rank": "Rank",
+    "th.date": "Date",
+    "h.results": "Tournaments & challenges",
+    "results.lead": "Results in speedrun tournaments and challenges, with the prize won.",
+    "g.tournaments": "Tournaments",
+    "th.event": "Event",
+    "th.result": "Result",
+    "th.prize": "Prize",
+    "r.1st": "1st place",
+    "r.top2": "Top 2",
+    "ev.sneevil": "RE9: Requiem, Sneevil tournament qualifiers",
+    "ev.reps.team": "R.E.P.S (RE4), team race",
+    "ev.reps.four": "R.E.P.S (RE4), 4-runner race",
+    "g.challenges": "Speedrun challenges",
+    "th.challenge": "Challenge",
+    "h.about": "About the channel",
+    "about.content.h": "Content",
+    "about.content": "Speedruns across the whole Resident Evil series: record attempts, races and tournaments. Long streams on Twitch and YouTube at the same time, usually starting between 4 and 5 PM (Uruguay, UTC-3).",
+    "about.yt": "On YouTube I upload my best times and tutorials.",
+    "about.community.h": "Community",
+    "about.community": "The channel's community is called xddArmy. We share it with other Spanish-speaking speedrun streamers.",
+    "h.ditman": "Ditman Cup organizer",
+    "ditman.p1": "A community-run international Resident Evil 4 speedrun tournament. I'm one of the organizers, I built the tournament website, and I won the 2026 edition.",
+    "ditman.p2": "The 2027 edition starts in January, with qualifiers open from December 26.",
+    "ditman.link": "See the Ditman Cup 2027 website",
+    "h.collabs": "Collaborations",
+    "collab.gfn": "GeForce NOW Powered by ABYA: YouTube shorts series (2026).",
+    "footer": "JokerUY · Montevideo, Uruguay"
+  };
+  var nodes = document.querySelectorAll('[data-i18n]');
+  var ES = {};
+  nodes.forEach(function (n) { ES[n.getAttribute('data-i18n')] = n.textContent; });
+
+  // Textos de la parte dinamica (datos de speedrun.com)
+  var DYN = {
+    es: { wrOnly: 'Récords mundiales', all: 'Todos los tiempos', statGames: 'juegos en los que corro', statWr: 'récords mundiales', statRuns: 'runs verificadas', statTop: 'juego con más runs', statSince: 'en speedrun.com desde', runsWord: 'runs', wrBadge: 'RM', place: '.º', note: 'Datos de speedrun.com al ', noteWr: 'Un récord mundial es una tabla (juego, categoría y subcategoría) donde tengo el 1.er puesto.', none: 'No pude cargar los datos de speedrun.com.' },
+    en: { wrOnly: 'World records', all: 'All times', statGames: 'games I run', statWr: 'world records', statRuns: 'verified runs', statTop: 'game with most runs', statSince: 'on speedrun.com since', runsWord: 'runs', wrBadge: 'WR', place: '', note: 'Data from speedrun.com as of ', noteWr: 'A world record is a leaderboard (game, category and subcategory) where I hold 1st place.', none: 'Could not load the speedrun.com data.' }
+  };
+  var lang = 'es', SR = null, onlyWr = true;
+
+  function ord(n) {
+    if (lang === 'es') return n + '.º';
+    var s = ['th', 'st', 'nd', 'rd'], v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
+  function fmtTime(sec) {
+    var ms = Math.round(sec * 1000), h = Math.floor(ms / 3600000), m = Math.floor(ms % 3600000 / 60000), s = Math.floor(ms % 60000 / 1000), f = ms % 1000;
+    var frac = f ? ('.' + String(f).padStart(3, '0').replace(/0+$/, '')) : '';
+    var pad = function (x) { return String(x).padStart(2, '0'); };
+    return (h ? h + ':' + pad(m) : m) + ':' + pad(s) + frac;
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso.length === 10 ? iso + 'T00:00:00Z' : iso);
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'es-UY', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(d);
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function renderRecords() {
+    if (!SR) return;
+    var D = DYN[lang], st = SR.stats, wrs = SR.personalBests.filter(function (p) { return p.worldRecord; });
+    // Fila de datos del hero
+    document.getElementById('fact-wr-n').textContent = st.worldRecords;
+    document.getElementById('fact-wr').hidden = false;
+    // Tarjetas de estadisticas (solo las que vinieron de la API)
+    var box = document.getElementById('rec-stats'); box.textContent = '';
+    var cards = [];
+    if (st.gamesWithPersonalBest != null) cards.push([st.gamesWithPersonalBest, D.statGames]);
+    cards.push([st.worldRecords, D.statWr]);
+    if (st.verifiedRuns != null) cards.push([st.verifiedRuns, D.statRuns]);
+    if (st.mostRunsGame) cards.push([st.mostRunsGame.game, D.statTop + ' (' + st.mostRunsGame.runs + ' ' + D.runsWord + ')', true]);
+    if (SR.user && SR.user.signupYear) cards.push([SR.user.signupYear, D.statSince]);
+    cards.forEach(function (c) {
+      var card = el('div', 'record');
+      card.appendChild(el('div', c[2] ? 'record-game' : 'record-num', String(c[0])));
+      card.appendChild(el('div', 'record-tag', c[1]));
+      box.appendChild(card);
+    });
+    // Filtro
+    var fWr = document.getElementById('rec-f-wr'), fAll = document.getElementById('rec-f-all');
+    fWr.textContent = D.wrOnly + ' (' + wrs.length + ')';
+    fAll.textContent = D.all + ' (' + SR.personalBests.length + ')';
+    fWr.setAttribute('aria-pressed', String(onlyWr)); fAll.setAttribute('aria-pressed', String(!onlyWr));
+    // Tabla
+    var body = document.getElementById('rec-body'); body.textContent = '';
+    (onlyWr ? wrs : SR.personalBests).forEach(function (p) {
+      var tr = el('tr');
+      tr.appendChild(el('td', null, p.game));
+      var cat = el('td', null, p.category);
+      if (p.subcategory) cat.appendChild(el('span', 'sub', p.subcategory));
+      tr.appendChild(cat);
+      var tt = el('td', 'time');
+      if (p.link) { var a = el('a', null, fmtTime(p.timeSeconds)); a.href = p.link; a.target = '_blank'; a.rel = 'noopener'; tt.appendChild(a); }
+      else tt.textContent = fmtTime(p.timeSeconds);
+      tr.appendChild(tt);
+      var rk = el('td', 'place' + (p.worldRecord ? ' first' : ''), p.place != null ? ord(p.place) : '');
+      if (p.worldRecord) rk.appendChild(el('span', 'badge-wr', D.wrBadge));
+      tr.appendChild(rk);
+      tr.appendChild(el('td', 'date', fmtDate(p.date)));
+      body.appendChild(tr);
+    });
+    document.getElementById('rec-note').textContent = D.note + fmtDate(SR.generatedAt) + '. ' + D.noteWr;
+    document.getElementById('records').hidden = false;
+  }
+
+  function apply(l) {
+    lang = l;
+    var dict = l === 'en' ? EN : ES;
+    nodes.forEach(function (n) { var k = n.getAttribute('data-i18n'); if (dict[k]) n.textContent = dict[k]; });
+    document.documentElement.lang = l;
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
+    try { localStorage.setItem('jokeruy-lang', l); } catch (e) {}
+    renderRecords();
+  }
+  document.getElementById('rec-f-wr').addEventListener('click', function () { onlyWr = true; renderRecords(); });
+  document.getElementById('rec-f-all').addEventListener('click', function () { onlyWr = false; renderRecords(); });
+  // Los datos salen de data/speedrun.json (lo genera scripts/update-speedrun.js); la pagina no consulta la API en vivo
+  fetch('data/speedrun.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (j) { SR = j; renderRecords(); }).catch(function () { /* sin datos: la seccion queda oculta */ });
+  document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.lang); }); });
+  var saved = null;
+  try { saved = localStorage.getItem('jokeruy-lang'); } catch (e) {}
+  if (!saved && navigator.language && navigator.language.toLowerCase().indexOf('es') !== 0) saved = 'en';
+  if (saved === 'en') apply('en');
+})();
+</script>
+</body></html>
