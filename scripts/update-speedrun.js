@@ -110,6 +110,50 @@ async function getAll(url) {
     personalBests,
   };
 
+  // Historial de records: para cada leaderboard donde hay runs propias, se ordenan todas las runs verificadas por fecha
+  // y se cuenta cuantas veces una run propia supero el mejor tiempo anterior (mismo criterio que la pestana "History").
+  // Si algo falla, no se agrega el dato (nunca se inventa).
+  try {
+    const cats = new Map();
+    for (const r of runs) {
+      if (r.level || !r.game || !r.game.data || !r.category) continue;
+      const cid = typeof r.category === 'string' ? r.category : r.category.data && r.category.data.id;
+      if (!cid) continue;
+      const key = r.game.data.id + '|' + cid;
+      if (!cats.has(key)) cats.set(key, { gid: r.game.data.id, game: r.game.data.names.international, cid });
+    }
+    const history = [];
+    for (const c of cats.values()) {
+      let vars;
+      try { vars = (await get(`${API}/categories/${c.cid}/variables`)).data.filter((v) => v['is-subcategory']); } catch (e) { continue; }
+      const list = (await getAll(`${API}/runs?game=${c.gid}&category=${c.cid}&status=verified&orderby=date&direction=asc`))
+        .filter((r) => !r.level && r.times && r.times.primary_t > 0);
+      await sleep(400);
+      const groups = new Map();
+      for (const r of list) {
+        const s = vars.map((v) => (r.values && r.values[v.id]) || '').join('|');
+        if (!groups.has(s)) groups.set(s, []);
+        groups.get(s).push(r);
+      }
+      for (const g of groups.values()) {
+        if (!g.some((r) => r.players.some((p) => p.id === user.id))) continue;
+        g.sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.submitted || '').localeCompare(b.submitted || ''));
+        let best = Infinity, mine = 0;
+        for (const r of g) {
+          if (r.times.primary_t < best) { best = r.times.primary_t; if (r.players.some((p) => p.id === user.id)) mine++; }
+        }
+        history.push({ game: c.game, recordsSet: mine });
+      }
+    }
+    const perGame = {};
+    for (const h of history) perGame[h.game] = (perGame[h.game] || 0) + h.recordsSet;
+    out.recordHistory = { method: 'Runs verificadas ordenadas por fecha; cuenta cada vez que una run propia bate el mejor tiempo anterior de su leaderboard.', perGame };
+    // Total en juegos de Resident Evil (los demas juegos no se suman a la cifra publica)
+    out.stats.worldRecordsAllTime = Object.entries(perGame).filter(([g]) => g.indexOf('Resident Evil') === 0).reduce((a, [, n]) => a + n, 0);
+  } catch (e) {
+    console.warn('Historial de records no disponible:', e.message);
+  }
+
   const file = path.join(__dirname, '..', 'data', 'speedrun.json');
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(out, null, 2) + '\n');

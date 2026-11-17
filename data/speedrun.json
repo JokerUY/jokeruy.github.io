@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T20:15:07.958Z",
+  "generatedAt": "2026-11-17T23:44:34.367Z",
   "source": "https://www.speedrun.com/users/JokerUY",
   "user": {
     "name": "JokerUY",
@@ -14,7 +14,8 @@
     "mostRunsGame": {
       "game": "Resident Evil 4 (Steam)",
       "runs": 38
-    }
+    },
+    "worldRecordsAllTime": 73
   },
   "personalBests": [
     {
@@ -437,5 +438,19 @@
       "worldRecord": false,
       "subcategory": "PC · Professional · Full Game"
     }
-  ]
+  ],
+  "recordHistory": {
+    "method": "Runs verificadas ordenadas por fecha; cuenta cada vez que una run propia bate el mejor tiempo anterior de su leaderboard.",
+    "perGame": {
+      "Resident Evil 3: Nemesis": 0,
+      "Resident Evil CODE: Madman": 7,
+      "Resident Evil 3: Nemesis Category Extensions": 0,
+      "Resident Evil 4 (Steam)": 21,
+      "La Rana": 5,
+      "Resident Evil 4 Category Extensions": 16,
+      "Resident Evil 4 (2023)": 19,
+      "Springy: A Bounce Adventure (Demo)": 1,
+      "Resident Evil Requiem": 10
+    }
+  }
 }
