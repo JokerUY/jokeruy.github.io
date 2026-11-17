@@ -36,7 +36,7 @@ async function getAll(url) {
 (async () => {
   const user = (await get(`${API}/users/${USER}`)).data;
   const pbs = await getAll(`${API}/users/${USER}/personal-bests?embed=game,category`);
-  const runs = await getAll(`${API}/runs?user=${user.id}&status=verified&embed=game`);
+  const runs = await getAll(`${API}/runs?user=${user.id}&status=verified&embed=game,category`);
 
   // Subcategorias (variables) de cada categoria, para distinguir tablas como "New Game" Professional / Standard
   const varsCache = {};
@@ -120,9 +120,10 @@ async function getAll(url) {
       const cid = typeof r.category === 'string' ? r.category : r.category.data && r.category.data.id;
       if (!cid) continue;
       const key = r.game.data.id + '|' + cid;
-      if (!cats.has(key)) cats.set(key, { gid: r.game.data.id, game: r.game.data.names.international, cid });
+      if (!cats.has(key)) cats.set(key, { gid: r.game.data.id, game: r.game.data.names.international, cid, cat: r.category.data ? r.category.data.name : null });
     }
     const history = [];
+    const former = [];
     for (const c of cats.values()) {
       let vars;
       try { vars = (await get(`${API}/categories/${c.cid}/variables`)).data.filter((v) => v['is-subcategory']); } catch (e) { continue; }
@@ -138,11 +139,21 @@ async function getAll(url) {
       for (const g of groups.values()) {
         if (!g.some((r) => r.players.some((p) => p.id === user.id))) continue;
         g.sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.submitted || '').localeCompare(b.submitted || ''));
-        let best = Infinity, mine = 0;
+        let best = Infinity, mine = 0, myBestRecord = null;
         for (const r of g) {
-          if (r.times.primary_t < best) { best = r.times.primary_t; if (r.players.some((p) => p.id === user.id)) mine++; }
+          if (r.times.primary_t < best) {
+            best = r.times.primary_t;
+            if (r.players.some((p) => p.id === user.id)) { mine++; myBestRecord = r; }
+          }
         }
         history.push({ game: c.game, recordsSet: mine });
+        // Ex record: la run propia fue record en su momento, pero hoy el mejor tiempo del leaderboard es otro
+        if (mine > 0 && myBestRecord && myBestRecord.times.primary_t > best) {
+          const sample = g.find((r) => r.values) || {};
+          const sub = vars.map((v) => { const id = myBestRecord.values && myBestRecord.values[v.id]; return id && v.values.values[id] ? v.values.values[id].label : null; }).filter(Boolean).join(' · ') || null;
+          const stillHolds = personalBests.some((p) => p.worldRecord && p.game === c.game && p.category === c.cat && (p.subcategory || null) === sub);
+          if (!stillHolds && c.game.indexOf('Resident Evil') === 0) former.push({ game: c.game, category: c.cat, subcategory: sub, date: myBestRecord.date || null, timeSeconds: myBestRecord.times.primary_t, link: myBestRecord.weblink || null });
+        }
       }
     }
     const perGame = {};
@@ -150,6 +161,19 @@ async function getAll(url) {
     out.recordHistory = { method: 'Runs verificadas ordenadas por fecha; cuenta cada vez que una run propia bate el mejor tiempo anterior de su leaderboard.', perGame };
     // Total en juegos de Resident Evil (los demas juegos no se suman a la cifra publica)
     out.stats.worldRecordsAllTime = Object.entries(perGame).filter(([g]) => g.indexOf('Resident Evil') === 0).reduce((a, [, n]) => a + n, 0);
+
+    // data/former-records.json: ex records detectados en el historial + lista "manual" que se completa a mano (se conserva al regenerar)
+    const fFile = path.join(__dirname, '..', 'data', 'former-records.json');
+    let manual = [];
+    try { manual = JSON.parse(fs.readFileSync(fFile, 'utf8')).manual || []; } catch (e) {}
+    former.sort((a, b) => a.game.localeCompare(b.game) || (b.date || '').localeCompare(a.date || ''));
+    fs.mkdirSync(path.dirname(fFile), { recursive: true });
+    fs.writeFileSync(fFile, JSON.stringify({
+      generatedAt: new Date().toISOString(),
+      note: 'records = ex records detectados con el historial de speedrun.com (la run propia fue record en su momento y hoy ya no lo es). manual = lista que se completa a mano: { "game": "", "category": "", "subcategory": "", "approximateDate": "texto libre", "link": "" }.',
+      records: former,
+      manual,
+    }, null, 2) + '\n');
   } catch (e) {
     console.warn('Historial de records no disponible:', e.message);
   }

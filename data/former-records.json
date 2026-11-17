@@ -1,0 +1,127 @@
+{
+  "generatedAt": "2026-11-17T23:55:35.640Z",
+  "note": "records = ex records detectados con el historial de speedrun.com (la run propia fue record en su momento y hoy ya no lo es). manual = lista que se completa a mano: { \"game\": \"\", \"category\": \"\", \"subcategory\": \"\", \"approximateDate\": \"texto libre\", \"link\": \"\" }.",
+  "records": [
+    {
+      "game": "Resident Evil 4 (2023)",
+      "category": "Separate Ways",
+      "subcategory": "PC · Professional",
+      "date": "2025-01-06",
+      "timeSeconds": 2250,
+      "link": "https://www.speedrun.com/re4r/runs/yww0k4ny"
+    },
+    {
+      "game": "Resident Evil 4 (2023)",
+      "category": "Any%",
+      "subcategory": "PC · Professional · No Bingo",
+      "date": "2024-12-17",
+      "timeSeconds": 5555,
+      "link": "https://www.speedrun.com/re4r/runs/y2nq425y"
+    },
+    {
+      "game": "Resident Evil 4 (2023)",
+      "category": "Separate Ways NG+",
+      "subcategory": "PC",
+      "date": "2023-12-15",
+      "timeSeconds": 2039,
+      "link": "https://www.speedrun.com/re4r/runs/m3kkoxgy"
+    },
+    {
+      "game": "Resident Evil 4 (2023)",
+      "category": "Any%",
+      "subcategory": "PC · Professional · Full Game",
+      "date": "2023-09-27",
+      "timeSeconds": 6200,
+      "link": "https://www.speedrun.com/re4r/runs/z5k7xxdz"
+    },
+    {
+      "game": "Resident Evil 4 (2023)",
+      "category": "Any%",
+      "subcategory": "PC · Professional (DA0) · Full Game",
+      "date": "2023-09-19",
+      "timeSeconds": 6161,
+      "link": "https://www.speedrun.com/re4r/runs/yd23rvwm"
+    },
+    {
+      "game": "Resident Evil 4 (Steam)",
+      "category": "New Game+",
+      "subcategory": "Professional · Single Segment · 60 FPS",
+      "date": "2026-11-09",
+      "timeSeconds": 4351.63,
+      "link": "https://www.speedrun.com/re4steam/runs/ydxk130z"
+    },
+    {
+      "game": "Resident Evil 4 Category Extensions",
+      "category": "No Laser",
+      "subcategory": "Professional · Steam",
+      "date": "2024-08-28",
+      "timeSeconds": 5161,
+      "link": "https://www.speedrun.com/re4ce/runs/ydld550z"
+    },
+    {
+      "game": "Resident Evil 4 Category Extensions",
+      "category": "1-1 Walk Backwards Knife Only",
+      "subcategory": "Steam",
+      "date": "2024-08-27",
+      "timeSeconds": 383,
+      "link": "https://www.speedrun.com/re4ce/runs/zgod4ejm"
+    },
+    {
+      "game": "Resident Evil 4 Category Extensions",
+      "category": "Save The Dog",
+      "subcategory": "Steam",
+      "date": "2024-08-26",
+      "timeSeconds": 30,
+      "link": "https://www.speedrun.com/re4ce/runs/z1n2019y"
+    },
+    {
+      "game": "Resident Evil 4 Category Extensions",
+      "category": "SW No Merchant",
+      "subcategory": "Steam",
+      "date": "2024-08-21",
+      "timeSeconds": 1368,
+      "link": "https://www.speedrun.com/re4ce/runs/m7o7vr0y"
+    },
+    {
+      "game": "Resident Evil 4 Category Extensions",
+      "category": "All Blue Medallions",
+      "subcategory": "Steam",
+      "date": "2024-07-29",
+      "timeSeconds": 441.367,
+      "link": "https://www.speedrun.com/re4ce/runs/znxk26ly"
+    },
+    {
+      "game": "Resident Evil CODE: Madman",
+      "category": "Any%",
+      "subcategory": null,
+      "date": "2025-09-07",
+      "timeSeconds": 113.392,
+      "link": "https://www.speedrun.com/re3.5/runs/y9erknvz"
+    },
+    {
+      "game": "Resident Evil Requiem",
+      "category": "Unrestricted",
+      "subcategory": "PC · Insanity · No Intro",
+      "date": "2026-06-11",
+      "timeSeconds": 4535,
+      "link": "https://www.speedrun.com/RE9/runs/z5n4podz"
+    },
+    {
+      "game": "Resident Evil Requiem",
+      "category": "Any%",
+      "subcategory": "Insanity · Full Game",
+      "date": "2026-06-02",
+      "timeSeconds": 6073,
+      "link": "https://www.speedrun.com/RE9/runs/ywo55dnm"
+    },
+    {
+      "game": "Resident Evil Requiem",
+      "category": "Any%",
+      "subcategory": "Insanity · No Intro",
+      "date": "2026-05-31",
+      "timeSeconds": 5085,
+      "link": "https://www.speedrun.com/RE9/runs/y4v0je2y"
+    }
+  ],
+  "manual": []
+}
