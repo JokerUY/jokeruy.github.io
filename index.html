@@ -54,11 +54,15 @@ body {
   margin: 0; color: var(--cream); font-family: var(--f-serif); line-height: 1.55;
   background: var(--bg); overflow-x: hidden; position: relative; min-height: 100vh;
 }
-/* Fondo: imagen oscura teñida de azul marino + granulado de pelicula */
+/* Fondo: mezcla opaca de los colores del nombre (celeste y dorado) sobre azul marino + granulado de pelicula.
+   Cuando haya un banner propio se agrega aqui como primera capa. */
 body::before {
   content: ""; position: fixed; inset: 0; z-index: -2;
-  background: linear-gradient(rgba(2, 3, 13, .84), rgba(2, 3, 13, .96)), url('assets/fondo1.jpeg') center top / cover no-repeat;
-  filter: grayscale(1) sepia(.2) hue-rotate(190deg) saturate(2.2);
+  background:
+    radial-gradient(900px 620px at 8% 0%, rgba(68, 187, 238, .2), transparent 68%),
+    radial-gradient(900px 640px at 100% 38%, rgba(240, 192, 62, .15), transparent 68%),
+    radial-gradient(800px 560px at 12% 100%, rgba(240, 192, 62, .1), transparent 68%),
+    linear-gradient(#02030D, #050920);
 }
 body::after { content: ""; position: fixed; inset: 0; z-index: 50; pointer-events: none; background: var(--grain); opacity: .05; }
 #embers { position: fixed; inset: 0; z-index: -1; pointer-events: none; width: 100%; height: 100%; }
@@ -74,7 +78,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .stat-value.glow { animation: pulse 3.6s ease-in-out infinite; }
 .silver { background: linear-gradient(#FFFFFF, #9C9C9C); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 6px rgba(2, 3, 13, .9)); }
 /* Nombre con el degradado de su perfil de speedrun.com (celeste a dorado) */
-.src-name { display: inline-block; background: linear-gradient(90deg, #44BBEE, #F0C03E); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 0 rgba(0, 0, 0, .55)) drop-shadow(0 0 14px rgba(68, 187, 238, .35)); }
+h1.src-name { font-family: 'Elegant Typewriter', 'Courier New', monospace; font-weight: 700; font-size: clamp(2.4rem, 8vw, 3.9rem); letter-spacing: .01em; display: inline-block; background: linear-gradient(90deg, #44BBEE, #F0C03E); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 0 rgba(0, 0, 0, .55)) drop-shadow(0 0 14px rgba(68, 187, 238, .35)); }
 .red { background: linear-gradient(#FF3B22, #C00000); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 14px rgba(225, 70, 44, .65)); }
 @keyframes pulse { 50% { filter: drop-shadow(0 0 15px rgba(255, 210, 0, .85)) drop-shadow(0 2px 0 rgba(0, 0, 0, .65)); } }
 @keyframes flicker { 0%, 92%, 100% { opacity: 1; } 93% { opacity: .55; } 94% { opacity: 1; } 96% { opacity: .7; } 97% { opacity: 1; } }
@@ -150,25 +154,30 @@ section { padding-top: 2.4rem; }
   clip-path: polygon(0 12%, 2% 0, 5% 10%, 9% 2%, 14% 9%, 20% 0, 27% 8%, 35% 1%, 42% 10%, 50% 0, 58% 8%, 66% 1%, 74% 9%, 82% 0, 90% 8%, 96% 1%, 100% 10%, 100% 88%, 97% 100%, 92% 90%, 85% 99%, 78% 91%, 70% 100%, 62% 92%, 54% 99%, 46% 90%, 38% 100%, 30% 91%, 22% 99%, 14% 90%, 8% 100%, 3% 91%, 0 100%);
   filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .5));
 }
-.cols3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.2rem; }
+.cols3 { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+.frame > .panel.twitch { background: linear-gradient(160deg, #3F2490, #1E0F4D); box-shadow: inset 0 0 0 1px #6E48C9, inset 0 0 38px rgba(8, 0, 30, .7); }
+.frame > .panel.yt { background: linear-gradient(160deg, #861414, #380606); box-shadow: inset 0 0 0 1px #B83232, inset 0 0 38px rgba(30, 0, 0, .7); }
+.panel.twitch .ic { color: #B794F6; }
+.panel.yt .ic { color: #FF5A50; }
 .cols3 > * { min-width: 0; }
 .stats.mini { grid-template-columns: 1fr 1fr; gap: .5rem; margin: .8rem 0 .5rem; }
 .stats.mini .stat { padding: .4rem .6rem .5rem; }
 .stats.mini .stat-label { font-size: .7rem; line-height: 1.2; }
-.stats.mini .stat-value { font-size: 1.45rem; }
+.stats.mini .stat-value { font-size: 1.15rem; }
 .panel-body .note { padding: 0; margin: 0 0 .8rem; }
-.results.ev .sub { font-family: var(--f-serif); text-transform: none; letter-spacing: 0; font-size: .82rem; line-height: 1.3; color: #E8C3BE; margin-top: .15rem; }
+.results.ev .sub { font-family: var(--f-serif); text-transform: none; letter-spacing: 0; font-size: .74rem; line-height: 1.3; color: #E8C3BE; margin-top: .15rem; }
 .ch-row { display: flex; gap: .9rem; align-items: center; margin-bottom: .7rem; }
 .ch-row p { margin: 0 !important; }
 
 /* Torneos y desafios: otra fuente (Bebas Neue) y colores rojo, negro y crema */
-.frame > .panel.hot { background: linear-gradient(160deg, #5C0F0B, #240504); box-shadow: inset 0 0 0 1px var(--red), inset 0 0 40px rgba(0, 0, 0, .75); }
-.results.ev th, .results.ev td { font-family: var(--f-sport); text-transform: uppercase; border-image: linear-gradient(90deg, transparent, var(--red) 14%, var(--red) 86%, transparent) 1; padding-block: .55rem; }
-.results.ev th { font-size: 1rem; letter-spacing: .12em; color: var(--red-glow); font-weight: 400; }
-.results.ev td { font-size: 1.3rem; letter-spacing: .05em; color: var(--cream); line-height: 1.2; }
-.results.ev td:first-child { width: 58%; }
+.ev-box { margin: .9rem 0 1rem; border: 1px solid var(--red); background: linear-gradient(160deg, #5C0F0B, #240504); box-shadow: inset 0 0 28px rgba(0, 0, 0, .7); }
+.ev-cap { font-family: var(--f-type); text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; color: var(--cream); padding: .45rem .8rem; border-bottom: 1px solid var(--red); }
+.results.ev th, .results.ev td { font-family: var(--f-sport); text-transform: uppercase; border-image: linear-gradient(90deg, transparent, var(--red) 14%, var(--red) 86%, transparent) 1; padding: .32rem .7rem; }
+.results.ev th { font-size: .8rem; letter-spacing: .12em; color: var(--red-glow); font-weight: 400; }
+.results.ev td { font-size: 1.05rem; letter-spacing: .05em; color: var(--cream); line-height: 1.2; }
+.results.ev td:first-child { width: 60%; }
 .results.ev .prize .pv { background: linear-gradient(#FFFFFF, #F3EEDD); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 8px rgba(225, 70, 44, .85)) drop-shadow(0 2px 0 rgba(0, 0, 0, .7)); font-size: 1.45rem; }
-.results.ev th.prize { font-family: var(--f-sport); font-size: 1rem; }
+.results.ev th.prize { font-family: var(--f-sport); font-size: .8rem; }
 .lead { color: var(--muted); max-width: 62ch; margin: -.2rem 0 1.1rem; }
 .stack { display: grid; gap: 1.2rem; }
 .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
@@ -197,23 +206,25 @@ section { padding-top: 2.4rem; }
 .note { color: var(--muted); font-family: var(--f-type); font-size: .78rem; margin: 0; padding: .7rem 1.2rem .9rem; }
 .rec-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-right: 1rem; }
 
-/* ---------- Bloque de acento (resaltado) ---------- */
-.accent {
-  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-  min-width: 150px; padding: .8rem 1.1rem; border-radius: 14px; background: #1b0508;
-  border: 1px solid rgba(225, 70, 44, .6); box-shadow: 0 0 22px rgba(225, 70, 44, .55), inset 0 0 18px rgba(181, 39, 28, .4);
-  font-family: var(--f-names); font-size: 1.4rem; line-height: 1.1; letter-spacing: .04em; text-transform: uppercase;
-}
-.accent small { font-family: var(--f-type); font-size: .7rem; letter-spacing: .08em; color: var(--cream); margin-top: .3rem; }
-.ditman-row { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
-.ditman-row > div:last-child { flex: 1 1 280px; min-width: 0; }
+
+/* Ditman Cup: usa el mismo diseño que la pagina del torneo (panel oscuro, marco bronce, rojo RE4) */
+.dc { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; padding: 1.3rem 1.4rem; border: 1px solid #7A6A49; border-radius: 2px; background: linear-gradient(rgba(22, 19, 15, .94), rgba(10, 9, 8, .96)); box-shadow: inset 0 0 0 1px #000, inset 0 0 26px rgba(0, 0, 0, .5); animation: rise .6s ease both; }
+.dc-logo { width: 150px; height: 150px; flex: none; object-fit: contain; }
+.dc-text { flex: 1 1 280px; min-width: 0; font-family: 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, Roboto, Arial, sans-serif; }
+.dc h3 { font-family: 'RE4 Remake', 'Virgula Vulgaris', sans-serif; font-weight: 400; font-size: 1.7rem; letter-spacing: .04em; margin: 0 0 .5rem; color: #E7E2D6; }
+.dc p { margin: 0 0 .7rem; color: #B3AB9C; line-height: 1.6; }
+.dc-btn { display: inline-block; margin-top: .3rem; font-family: 'RE4 Remake', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; font-size: .95rem; text-decoration: none; color: #fff; background: #B5271C; border: 1px solid #B5271C; border-radius: 2px; padding: .55rem 1.1rem; transition: background .15s, border-color .15s; }
+.dc-btn:hover { background: #E1462C; border-color: #E1462C; }
+@media (max-width: 520px) { .dc { justify-content: center; text-align: center; } }
 
 .list { list-style: none; margin: 0; padding: 0; }
 .list li { padding: .6rem 1.2rem; border-bottom: 1px solid; border-image: linear-gradient(90deg, transparent, var(--sep) 14%, var(--sep) 86%, transparent) 1; }
 .list li:last-child { border-bottom: 0; border-image: none; }
 
-footer { margin-top: 1rem; border-top: 3px solid #000; background: var(--grain), linear-gradient(var(--iron-mid), var(--iron-dark)); background-blend-mode: soft-light, normal; }
+footer { position: relative; margin-top: 1rem; border-top: 3px solid #000; background: linear-gradient(#070F6B, #02030D); box-shadow: inset 0 1px 0 var(--blue-line); }
+footer::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, #44BBEE, #F0C03E); opacity: .75; }
 footer .wrap { padding-block: 1.8rem; text-align: center; font-family: var(--f-type); color: var(--cream); }
+footer .foot-name { display: inline-block; margin: 0; font-family: 'Elegant Typewriter', 'Courier New', monospace; font-weight: 700; font-size: 1.3rem; background: linear-gradient(90deg, #44BBEE, #F0C03E); -webkit-background-clip: text; background-clip: text; color: transparent; }
 footer .links { justify-content: center; margin-bottom: 1rem; }
 
 @media (max-width: 640px) {
@@ -267,21 +278,7 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
 
   <section id="channels">
     <div class="cols3">
-      <div class="frame"><div class="panel">
-        <div class="panel-head">Twitch</div><div class="iron-bar"></div>
-        <div class="panel-body">
-          <p data-i18n="ch.twitch">Twitch Partner desde abril de 2026. Streams largos de speedrun, que suelen empezar entre las 16 y las 17 h (UTC-3).</p>
-          <div class="stats mini">
-            <div class="stat"><span class="stat-label" data-i18n="tw.avg">media de espectadores</span><span class="stat-value gold glow" data-i18n="tw.avg.v">~286</span></div>
-            <div class="stat"><span class="stat-label" data-i18n="tw.peak">pico máximo</span><span class="stat-value gold" data-i18n="tw.peak.v">3.210</span></div>
-            <div class="stat"><span class="stat-label" data-i18n="tw.uniq">espectadores únicos</span><span class="stat-value gold" data-i18n="tw.uniq.v">+75.000</span></div>
-            <div class="stat"><span class="stat-label" data-i18n="tw.hours">horas emitidas</span><span class="stat-value gold" data-i18n="tw.hours.v">~231 h</span></div>
-          </div>
-          <p class="note" data-i18n="tw.note">Estadísticas de Twitch de los últimos 30 días.</p>
-          <p><a class="btn" href="https://www.twitch.tv/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-twitch"/></svg><span data-i18n="ch.btn.channel">Ver canal</span></a></p>
-        </div>
-      </div></div>
-      <div class="frame"><div class="panel">
+      <div class="frame"><div class="panel yt">
         <div class="panel-head">YouTube</div><div class="iron-bar"></div>
         <div class="panel-body">
           <p data-i18n="ch.yt">Socio de YouTube. Mis mejores tiempos y tutoriales, y los streams largos en simultáneo con Twitch.</p>
@@ -291,24 +288,11 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
       <div class="frame"><div class="panel">
         <div class="panel-head">speedrun.com</div><div class="iron-bar"></div>
         <div class="panel-body">
-          <div class="ch-row">
-            <span class="emblem" aria-hidden="true">
-              <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="url(#gg)" stroke-width="3"/><circle cx="32" cy="32" r="25" fill="none" stroke="#6B4300" stroke-width="1" opacity=".7"/><g transform="translate(32 32) scale(1.05) translate(-12 -12)" fill="url(#gg)" stroke="#6B4300" stroke-width=".4"><path d="M5 3h14v2h3v3a5 5 0 0 1-4.4 4.96A6 6 0 0 1 13 16.9V19h3v2H8v-2h3v-2.1a6 6 0 0 1-4.6-3.94A5 5 0 0 1 2 8V5h3V3zm0 4H4v1a3 3 0 0 0 1.1 2.3A6 6 0 0 1 5 9V7zm14 0v2a6 6 0 0 1-.1 1.3A3 3 0 0 0 20 8V7h-1z"/></g></svg>
-              <svg class="sparkle s1"><use href="#spark"/></svg><svg class="sparkle s2"><use href="#spark"/></svg>
-            </span>
-            <p data-i18n="ch.src">Mis récords y mejores tiempos, con link a cada run, están en mi perfil.</p>
-          </div>
-          <p><a class="btn" href="https://www.speedrun.com/users/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-src"/></svg><span data-i18n="ch.btn.profile">Ver perfil</span></a></p>
-        </div>
-      </div></div>
-    </div>
-  </section>
-
-  <section id="results">
-    <div class="banner"><h2 data-i18n="h.results">Torneos y desafíos</h2></div>
-    <div class="frame"><div class="panel hot">
-      <div class="table-wrap">
-        <table class="results ev">
+          <p data-i18n="ch.src">Mis récords y mejores tiempos, con link a cada run, están en mi perfil.</p>
+          <div class="ev-box">
+            <div class="ev-cap" data-i18n="h.results">Torneos y desafíos</div>
+            <div class="table-wrap">
+              <table class="results ev">
           <thead><tr><th data-i18n="th.event">Evento</th><th data-i18n="th.result">Resultado</th><th class="prize" data-i18n="th.prize">Premio</th></tr></thead>
           <tbody>
             <tr><td>Ditman Cup 2026 (RE4)<span class="sub" data-i18n="ev.ditman.sub">Organizador, streamer, comentarista y campeón · 42 streams · pico de 246</span></td><td data-i18n="r.1st">1.er puesto</td><td class="prize"><span class="pv">USD 627</span></td></tr>
@@ -318,28 +302,37 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
             <tr><td data-i18n="ev.reps.four">R.E.P.S (RE4), carrera de 4 runners</td><td data-i18n="r.1st">1.er puesto</td><td class="prize"><span class="pv">USD 190</span></td></tr>
             <tr><td>R.E.P.S (RE4)</td><td data-i18n="r.1st">1.er puesto</td><td class="prize"><span class="pv">USD 100</span></td></tr>
             <tr><td>R.E.P.S (RE9)</td><td data-i18n="r.1st">1.er puesto</td><td class="prize"><span class="pv">USD 100</span></td></tr>
-            <tr><td>MoistCr1TiKaL Speedrun Challenge</td><td>—</td><td class="prize"><span class="pv">USD 500</span></td></tr>
-            <tr><td>GoE Speedrun Challenge</td><td>—</td><td class="prize"><span class="pv">USD 300</span></td></tr>
-            <tr><td>Van Wheel Gone Speedrun Challenge</td><td>—</td><td class="prize"><span class="pv">USD 200</span></td></tr>
+            <tr><td>MoistCr1TiKaL Speedrun Challenge</td><td>Top 6</td><td class="prize"><span class="pv">USD 500</span></td></tr>
+            <tr><td>GoE Speedrun Challenge</td><td>Top 4</td><td class="prize"><span class="pv">USD 300</span></td></tr>
+            <tr><td>Van Wheel Gone Speedrun Challenge</td><td>Top 11</td><td class="prize"><span class="pv">USD 200</span></td></tr>
           </tbody>
         </table>
-      </div>
-    </div></div>
+            </div>
+          </div>
+          <p><a class="btn" href="https://www.speedrun.com/users/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-src"/></svg><span data-i18n="ch.btn.profile">Ver perfil</span></a></p>
+        </div>
+      </div></div>
+      <div class="frame"><div class="panel twitch">
+        <div class="panel-head">Twitch</div><div class="iron-bar"></div>
+        <div class="panel-body">
+          <p data-i18n="ch.twitch">Twitch Partner desde abril de 2026. Streams largos de speedrun, que suelen empezar entre las 16 y las 17 h (UTC-3).</p>
+          <p><a class="btn" href="https://www.twitch.tv/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-twitch"/></svg><span data-i18n="ch.btn.channel">Ver canal</span></a></p>
+        </div>
+      </div></div>
+    </div>
   </section>
 
   <section id="ditman">
     <div class="banner"><h2 data-i18n="h.ditman">Eventos:</h2></div>
-    <div class="frame"><div class="panel">
-      <div class="panel-head">Ditman Cup</div><div class="iron-bar"></div>
-      <div class="panel-body ditman-row">
-        <div class="accent"><span class="red" data-i18n="ditman.champ">Campeón 2026</span><small>Ditman Cup</small></div>
-        <div>
-          <p data-i18n="ditman.p1">Torneo internacional de speedrun de Resident Evil 4 hecho por la comunidad. Soy uno de los organizadores, armé la página del torneo y gané la edición 2026.</p>
-          <p data-i18n="ditman.p2">La edición 2027 empieza en enero, con clasificatorias abiertas desde el 26 de diciembre.</p>
-          <p><a class="btn" href="https://ditmancup.github.io/DitmanCup-2027/" target="_blank" rel="noopener" data-i18n="ditman.link">Ver la página de la Ditman Cup 2027</a></p>
-        </div>
+    <div class="dc">
+      <img class="dc-logo" src="assets/logo-ditman-2027.webp" width="150" height="150" alt="Ditman Cup 2027" loading="lazy">
+      <div class="dc-text">
+        <h3>Ditman Cup</h3>
+        <p data-i18n="ditman.p1">Torneo internacional de speedrun de Resident Evil 4 hecho por la comunidad. Soy uno de los organizadores, armé la página del torneo y gané la edición 2026.</p>
+        <p data-i18n="ditman.p2">La edición 2027 empieza en enero, con clasificatorias abiertas desde el 26 de diciembre.</p>
+        <a class="dc-btn" href="https://ditmancup.github.io/DitmanCup-2027/" target="_blank" rel="noopener" data-i18n="ditman.link">Ver la página de la Ditman Cup 2027</a>
       </div>
-    </div></div>
+    </div>
   </section>
 
 </main>
@@ -352,7 +345,7 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
       <a class="btn" href="https://www.speedrun.com/users/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-src"/></svg>speedrun.com</a>
       <a class="btn" href="https://ditmancup.github.io/DitmanCup-2027/" target="_blank" rel="noopener">Ditman Cup</a>
     </div>
-    <p data-i18n="footer">JokerUY · Montevideo, Uruguay</p>
+    <p class="foot-name">JokerUY</p>
   </div>
 </footer>
 
@@ -360,15 +353,6 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
 (function () {
   var EN = {
     "tagline": "Resident Evil speedrunner, organizer and commentator · Montevideo, Uruguay",
-    "tw.avg": "average viewers",
-    "tw.avg.v": "~286",
-    "tw.peak": "peak viewers",
-    "tw.peak.v": "3,210",
-    "tw.uniq": "unique viewers",
-    "tw.uniq.v": "75,000+",
-    "tw.hours": "hours streamed",
-    "tw.hours.v": "~231 h",
-    "tw.note": "Twitch stats for the last 30 days.",
     "ev.ditman.sub": "Organizer, streamer, commentator and champion · 42 streams · peak of 246",
     "ev.basement.sub": "Resident Evil 3 Nemesis speedrunning world cup · September 2025",
     "ch.twitch": "Twitch Partner since April 2026. Long speedrun streams, usually starting between 4 and 5 PM (UTC-3).",
@@ -386,11 +370,9 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
     "ev.reps.team": "R.E.P.S (RE4), team race",
     "ev.reps.four": "R.E.P.S (RE4), 4-runner race",
     "h.ditman": "Events:",
-    "ditman.champ": "2026 Champion",
     "ditman.p1": "A community-run international Resident Evil 4 speedrun tournament. I'm one of the organizers, I built the tournament website, and I won the 2026 edition.",
     "ditman.p2": "The 2027 edition starts in January, with qualifiers open from December 26.",
     "ditman.link": "See the Ditman Cup 2027 website",
-    "footer": "JokerUY · Montevideo, Uruguay"
   };
   var nodes = document.querySelectorAll('[data-i18n]');
   var ES = {};
