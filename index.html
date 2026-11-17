@@ -1,5 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="icon" href="assets/avatar.jpg">
-<title>JokerUY</title>
+<meta name="theme-color" content="#02030D">
+<meta property="og:type" content="website"><meta property="og:title" content="JokerUY | Speedrunner de Resident Evil"><meta property="og:description" content="Speedrunner, organizador y comentarista de Resident Evil. Twitch Partner y YouTube Partner. Montevideo, Uruguay."><meta property="og:url" content="https://jokeruy.github.io/"><meta property="og:image" content="https://jokeruy.github.io/assets/avatar.jpg"><meta name="twitter:card" content="summary">
+<title>JokerUY | Speedrunner de Resident Evil</title>
 <meta name="description" content="JokerUY: speedrunner de Resident Evil de Montevideo, Uruguay. Récords mundiales, torneos y canales.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
@@ -129,7 +131,7 @@ main { padding-block: 1.6rem 3rem; }
 .avatar-box { width: 160px; height: 160px; display: block; overflow: hidden; border-radius: 50%; background: var(--bg); border: 4px solid var(--iron-dark); outline: 1px solid var(--iron-hi); box-shadow: 0 8px 20px rgba(0, 0, 0, .65); }
 /* Zoom hacia la cara y el sombrero para que el cigarro no domine el encuadre */
 .avatar { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.5); transform-origin: 72% 20%; }
-h1 { font-family: var(--f-title); font-weight: 400; font-size: clamp(2.8rem, 9vw, 4.6rem); letter-spacing: .05em; line-height: 1; margin: 0 0 .3rem; animation: flicker 9s infinite; }
+h1 { font-family: var(--f-title); font-weight: 400; font-size: clamp(2.8rem, 9vw, 4.6rem); letter-spacing: .05em; line-height: 1; margin: 0 0 .3rem; }
 .tagline { font-family: var(--f-serif); color: var(--cream); font-size: 1.1rem; margin: 0 0 1.1rem; }
 .links { display: flex; gap: .55rem; flex-wrap: wrap; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .7rem; margin-top: 1.3rem; }
@@ -165,18 +167,19 @@ section { padding-top: 2.4rem; }
 .stats.mini .stat-label { font-size: .7rem; line-height: 1.2; }
 .stats.mini .stat-value { font-size: 1.15rem; }
 .panel-body .note { padding: 0; margin: 0 0 .8rem; }
-.results.ev .sub { font-family: var(--f-serif); text-transform: none; letter-spacing: 0; font-size: .74rem; line-height: 1.3; color: #E8C3BE; margin-top: .15rem; }
+.results.ev .sub { font-family: var(--f-serif); text-transform: none; letter-spacing: 0; font-size: .74rem; line-height: 1.3; color: #8D94B3; margin-top: .15rem; }
 .ch-row { display: flex; gap: .9rem; align-items: center; margin-bottom: .7rem; }
 .ch-row p { margin: 0 !important; }
 
 /* Torneos y desafios: otra fuente (Bebas Neue) y colores rojo, negro y crema */
-.ev-box { margin: .9rem 0 1rem; border: 1px solid var(--red); background: linear-gradient(160deg, #5C0F0B, #240504); box-shadow: inset 0 0 28px rgba(0, 0, 0, .7); }
-.ev-cap { font-family: var(--f-type); text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; color: var(--cream); padding: .45rem .8rem; border-bottom: 1px solid var(--red); }
-.results.ev th, .results.ev td { font-family: var(--f-sport); text-transform: uppercase; border-image: linear-gradient(90deg, transparent, var(--red) 14%, var(--red) 86%, transparent) 1; padding: .32rem .7rem; }
-.results.ev th { font-size: .8rem; letter-spacing: .12em; color: var(--red-glow); font-weight: 400; }
-.results.ev td { font-size: 1.05rem; letter-spacing: .05em; color: var(--cream); line-height: 1.2; }
+.ev-box { margin: .9rem 0 1rem; border: 1px solid #343954; background: linear-gradient(160deg, #0B0D1A, #05060E); box-shadow: inset 0 0 24px rgba(0, 0, 0, .6); }
+.ev-cap { font-family: var(--f-type); text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; color: var(--muted); padding: .45rem .8rem; border-bottom: 1px solid #343954; }
+.src-stat { color: var(--cream); font-size: .95rem; }
+.results.ev th, .results.ev td { font-family: var(--f-sport); text-transform: uppercase; border-image: linear-gradient(90deg, transparent, #2A2F4A 14%, #2A2F4A 86%, transparent) 1; padding: .32rem .7rem; }
+.results.ev th { font-size: .8rem; letter-spacing: .12em; color: #8D94B3; font-weight: 400; }
+.results.ev td { font-size: 1.05rem; letter-spacing: .05em; color: #D9D5C8; line-height: 1.2; }
 .results.ev td:first-child { width: 60%; }
-.results.ev .prize .pv { background: linear-gradient(#FFFFFF, #F3EEDD); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 8px rgba(225, 70, 44, .85)) drop-shadow(0 2px 0 rgba(0, 0, 0, .7)); font-size: 1.45rem; }
+.results.ev .prize .pv { color: #E7E2D6; font-size: 1.15rem; }
 .results.ev th.prize { font-family: var(--f-sport); font-size: .8rem; }
 .lead { color: var(--muted); max-width: 62ch; margin: -.2rem 0 1.1rem; }
 .stack { display: grid; gap: 1.2rem; }
@@ -213,7 +216,7 @@ section { padding-top: 2.4rem; }
 .dc-text { flex: 1 1 280px; min-width: 0; font-family: 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, Roboto, Arial, sans-serif; }
 .dc h3 { font-family: 'RE4 Remake', 'Virgula Vulgaris', sans-serif; font-weight: 400; font-size: 1.7rem; letter-spacing: .04em; margin: 0 0 .5rem; color: #E7E2D6; }
 .dc p { margin: 0 0 .7rem; color: #B3AB9C; line-height: 1.6; }
-.dc-btn { display: inline-block; margin-top: .3rem; font-family: 'RE4 Remake', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; font-size: .95rem; text-decoration: none; color: #fff; background: #B5271C; border: 1px solid #B5271C; border-radius: 2px; padding: .55rem 1.1rem; transition: background .15s, border-color .15s; }
+.dc-btn { display: inline-block; margin-top: .3rem; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; text-decoration: none; color: #fff; background: #B5271C; border: 1px solid #B5271C; border-radius: 2px; padding: .55rem 1.1rem; transition: background .15s, border-color .15s; }
 .dc-btn:hover { background: #E1462C; border-color: #E1462C; }
 @media (max-width: 520px) { .dc { justify-content: center; text-align: center; } }
 
@@ -266,7 +269,7 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
     <span class="avatar-box"><img class="avatar" src="assets/avatar.jpg" alt="Logo del canal de JokerUY" width="160" height="160"></span>
     <div>
       <h1 class="src-name">JokerUY</h1>
-      <p class="tagline" data-i18n="tagline">Speedrunner, organizador y comentarista de Resident Evil · Montevideo, Uruguay</p>
+      <p class="tagline"><span data-i18n="tagline">Speedrunner, organizador y comentarista de Resident Evil</span><br><span data-i18n="tagline.loc">Montevideo, Uruguay</span></p>
       <div class="links">
         <a class="btn" href="https://www.twitch.tv/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-twitch"/></svg>Twitch</a>
         <a class="btn" href="https://www.youtube.com/@jokeruy" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-youtube"/></svg>YouTube</a>
@@ -278,10 +281,17 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
 
   <section id="channels">
     <div class="cols3">
+      <div class="frame"><div class="panel twitch">
+        <div class="panel-head">Twitch</div><div class="iron-bar"></div>
+        <div class="panel-body">
+          <p data-i18n="ch.twitch">Twitch Partner desde abril de 2026. Streams largos de speedrun de toda la saga Resident Evil, en simultáneo con YouTube. Organizador y comentarista de la Ditman Cup, torneo internacional de Resident Evil 4.</p>
+          <p><a class="btn" href="https://www.twitch.tv/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-twitch"/></svg><span data-i18n="ch.btn.channel">Ver canal</span></a></p>
+        </div>
+      </div></div>
       <div class="frame"><div class="panel yt">
         <div class="panel-head">YouTube</div><div class="iron-bar"></div>
         <div class="panel-body">
-          <p data-i18n="ch.yt">Socio de YouTube. Mis mejores tiempos y tutoriales, y los streams largos en simultáneo con Twitch.</p>
+          <p data-i18n="ch.yt">Partner de YouTube. Mejores tiempos y tutoriales de speedrun, y los streams largos en simultáneo con Twitch.</p>
           <p><a class="btn" href="https://www.youtube.com/@jokeruy" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-youtube"/></svg><span data-i18n="ch.btn.channel">Ver canal</span></a></p>
         </div>
       </div></div>
@@ -289,6 +299,7 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
         <div class="panel-head">speedrun.com</div><div class="iron-bar"></div>
         <div class="panel-body">
           <p data-i18n="ch.src">Mis récords y mejores tiempos, con link a cada run, están en mi perfil.</p>
+          <p class="src-stat" id="src-stat" hidden></p>
           <div class="ev-box">
             <div class="ev-cap" data-i18n="h.results">Torneos y desafíos</div>
             <div class="table-wrap">
@@ -310,13 +321,6 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
             </div>
           </div>
           <p><a class="btn" href="https://www.speedrun.com/users/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-src"/></svg><span data-i18n="ch.btn.profile">Ver perfil</span></a></p>
-        </div>
-      </div></div>
-      <div class="frame"><div class="panel twitch">
-        <div class="panel-head">Twitch</div><div class="iron-bar"></div>
-        <div class="panel-body">
-          <p data-i18n="ch.twitch">Twitch Partner desde abril de 2026. Streams largos de speedrun, que suelen empezar entre las 16 y las 17 h (UTC-3).</p>
-          <p><a class="btn" href="https://www.twitch.tv/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-twitch"/></svg><span data-i18n="ch.btn.channel">Ver canal</span></a></p>
         </div>
       </div></div>
     </div>
@@ -352,11 +356,12 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
 <script>
 (function () {
   var EN = {
-    "tagline": "Resident Evil speedrunner, organizer and commentator · Montevideo, Uruguay",
+    "tagline": "Resident Evil speedrunner, organizer and commentator",
+    "tagline.loc": "Montevideo, Uruguay",
     "ev.ditman.sub": "Organizer, streamer, commentator and champion · 42 streams · peak of 246",
     "ev.basement.sub": "Resident Evil 3 Nemesis speedrunning world cup · September 2025",
-    "ch.twitch": "Twitch Partner since April 2026. Long speedrun streams, usually starting between 4 and 5 PM (UTC-3).",
-    "ch.yt": "YouTube partner. My best times and tutorials, and the long streams at the same time as Twitch.",
+    "ch.twitch": "Twitch Partner since April 2026. Long speedrun streams across the whole Resident Evil series, live on YouTube at the same time. Organizer and commentator of the Ditman Cup, an international Resident Evil 4 tournament.",
+    "ch.yt": "YouTube Partner. Best times and speedrun tutorials, plus the long streams live at the same time as Twitch.",
     "ch.src": "My records and best times, with a link to each run, are on my profile.",
     "ch.btn.channel": "View channel",
     "ch.btn.profile": "View profile",
@@ -385,7 +390,20 @@ footer .links { justify-content: center; margin-bottom: 1rem; }
     document.documentElement.lang = l;
     document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
     try { localStorage.setItem('jokeruy-lang', l); } catch (e) {}
+    curLang = l; renderSrc();
   }
+  var SRC = null, curLang = 'es';
+  function renderSrc() {
+    var el = document.getElementById('src-stat');
+    if (!SRC || !el) return;
+    var wr = SRC.stats.worldRecords, runs = SRC.stats.verifiedRuns;
+    el.textContent = curLang === 'en'
+      ? wr + ' world records on speedrun.com (Resident Evil 4, CODE: Madman and Requiem) and ' + runs + ' verified runs.'
+      : wr + ' récords mundiales en speedrun.com (Resident Evil 4, CODE: Madman y Requiem) y ' + runs + ' runs verificadas.';
+    el.hidden = false;
+  }
+  fetch('data/speedrun.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (j) { SRC = j; renderSrc(); }).catch(function () {});
   document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.lang); }); });
 
   var saved = null;
