@@ -116,7 +116,9 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 /* ---------- Audiencia ---------- */
 .aud-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .9rem; margin-bottom: .7rem; font-family: var(--f-type); }
 .aud-plat { font-weight: 700; color: var(--cream); letter-spacing: .06em; }
-.aud-period { font-size: .78rem; color: var(--muted); }
+.aud-period { font-size: .8rem; font-weight: 700; letter-spacing: .02em; color: #F2D78A; background: rgba(209, 174, 92, .12); border: 1px solid rgba(209, 174, 92, .55); padding: .06rem .6rem; }
+.aud-note { margin: 1rem 0 0; font-family: var(--f-type); font-size: .74rem; color: var(--muted); }
+.aud-stats.five { grid-template-columns: repeat(5, 1fr); }
 .aud-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
 .aud-stats .datum b { font-size: 1.6rem; }
 .aud + .aud { margin-top: 1.4rem; }
@@ -171,9 +173,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
   .aud-stats { grid-template-columns: repeat(2, 1fr); row-gap: .9rem; }
   .aud-stats .datum:nth-child(odd) { border-left: 0; padding-left: 0; }
   .aud-stats .datum:nth-child(even) { padding-left: .8rem; }
-  .aud-stats.three { grid-template-columns: repeat(3, 1fr); row-gap: 0; }
-  .aud-stats.three .datum { padding-left: .5rem; border-left: 1px solid var(--line); }
-  .aud-stats.three .datum:first-child { padding-left: 0; border-left: 0; }
+  .aud-stats.five { grid-template-columns: repeat(2, 1fr); }
   .rec { grid-template-columns: 1fr auto; }
   .rec-cat { grid-column: 1 / -1; }
   .sec-row { justify-content: center; text-align: center; }
@@ -224,7 +224,8 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       <h2 data-i18n="h.audience">Audiencia</h2>
       <div class="aud" id="aud-twitch" hidden>
         <div class="aud-head"><span class="aud-plat">Twitch</span><span class="aud-period" id="a-tw-period"></span></div>
-        <div class="aud-stats">
+        <div class="aud-stats five">
+          <div class="datum" id="datum-tw-total" hidden><b id="a-tw-total"></b><span data-i18n="a.tw.total">seguidores totales</span></div>
           <div class="datum"><b id="a-tw-avg"></b><span data-i18n="a.avg">media de espectadores</span></div>
           <div class="datum" id="datum-tw-peak" hidden><b id="a-tw-peak"></b><span data-i18n="a.peak">espectadores máximos</span></div>
           <div class="datum"><b id="a-tw-follows"></b><span data-i18n="a.follows">nuevos seguidores</span></div>
@@ -233,12 +234,14 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       </div>
       <div class="aud" id="aud-yt" hidden>
         <div class="aud-head"><span class="aud-plat" data-i18n="a.yt.plat">YouTube · Videos</span><span class="aud-period" id="a-yt-period"></span></div>
-        <div class="aud-stats three">
+        <div class="aud-stats">
+          <div class="datum" id="datum-yt-total" hidden><b id="a-yt-total"></b><span data-i18n="a.yt.total">suscriptores totales</span></div>
           <div class="datum"><b id="a-yt-views"></b><span data-i18n="a.yt.views">visualizaciones</span></div>
           <div class="datum"><b id="a-yt-hours"></b><span data-i18n="a.yt.hours">horas de reproducción</span></div>
           <div class="datum"><b id="a-yt-dur"></b><span data-i18n="a.yt.dur">duración promedio de las vistas</span></div>
         </div>
       </div>
+      <p class="aud-note" id="aud-note" hidden></p>
     </section>
 
     <section class="sec" id="records">
@@ -302,6 +305,8 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "status.tw": "Twitch Partner since April 2026",
     "status.yt": "YouTube Partner since 2025",
     "h.audience": "Audience",
+    "a.tw.total": "total followers",
+    "a.yt.total": "total subscribers",
     "a.avg": "average viewers",
     "a.yt.plat": "YouTube · Videos",
     "a.yt.views": "views",
@@ -401,6 +406,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
       set('a-tw-period', t.from && t.to ? fmtRange(t.from, t.to, t.days) : '');
       set('a-tw-avg', fmtN(t.averageViewers));
+      var tt = document.getElementById('datum-tw-total'); if (tt) { tt.hidden = t.totalFollowers == null; if (t.totalFollowers != null) set('a-tw-total', fmtN(t.totalFollowers)); }
       var pk = document.getElementById('datum-tw-peak'); if (pk) { pk.hidden = t.peakViewers == null; if (t.peakViewers != null) set('a-tw-peak', fmtN(t.peakViewers)); }
       set('a-tw-follows', t.newFollows != null ? fmtN(t.newFollows) : '–');
       set('a-tw-hours', t.hoursStreamed != null ? fmtN(t.hoursStreamed) + ' h' + (t.minutesStreamed ? ' ' + t.minutesStreamed + ' min' : '') : '–');
@@ -411,10 +417,13 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       var sy = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
       sy('a-yt-period', y.from && y.to ? fmtRange(y.from, y.to, y.days) : '');
       sy('a-yt-views', fmtN(y.views));
+      var yt2 = document.getElementById('datum-yt-total'); if (yt2) { yt2.hidden = y.totalSubscribers == null; if (y.totalSubscribers != null) sy('a-yt-total', fmtN(y.totalSubscribers)); }
       sy('a-yt-hours', y.watchHours != null ? fmtN(y.watchHours, 1) : '–');
       sy('a-yt-dur', y.averageViewDuration || '–');
       yb.hidden = false; any = true;
     }
+    var nt = document.getElementById('aud-note');
+    if (nt) { var hasTot = (t && t.totalFollowers != null) || (y && y.totalSubscribers != null); nt.hidden = !(hasTot && AUD.totalsAsOf); if (!nt.hidden) nt.textContent = (curLang() === 'en' ? 'Follower and subscriber totals as of ' : 'Seguidores y suscriptores totales al ') + fmtDate(AUD.totalsAsOf) + '.'; }
     if (sec) sec.hidden = !any;
   }
   function recRow(r, isFormer, isTop) {

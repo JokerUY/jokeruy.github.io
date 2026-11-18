@@ -9,7 +9,8 @@
     "newFollows": 2963,
     "hoursStreamed": 785,
     "minutesStreamed": 51,
-    "source": "Panel de estadisticas de Twitch (Creator Dashboard)"
+    "source": "Panel de estadisticas de Twitch (Creator Dashboard)",
+    "totalFollowers": 4840
   },
   "youtube": {
     "from": "2025-11-17",
@@ -18,6 +19,8 @@
     "views": 515080,
     "watchHours": 94522.8,
     "averageViewDuration": "12:20",
-    "source": "YouTube Studio, Analytics, solo videos (no vivos), ultimos 365 dias"
-  }
+    "source": "YouTube Studio, Analytics, solo videos (no vivos), ultimos 365 dias",
+    "totalSubscribers": 5226
+  },
+  "totalsAsOf": "2026-11-17"
 }
