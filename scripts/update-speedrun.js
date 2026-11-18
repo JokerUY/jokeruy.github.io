@@ -152,7 +152,7 @@ async function getAll(url) {
           const sample = g.find((r) => r.values) || {};
           const sub = vars.map((v) => { const id = myBestRecord.values && myBestRecord.values[v.id]; return id && v.values.values[id] ? v.values.values[id].label : null; }).filter(Boolean).join(' · ') || null;
           const stillHolds = personalBests.some((p) => p.worldRecord && p.game === c.game && p.category === c.cat && (p.subcategory || null) === sub);
-          if (!stillHolds && c.game.indexOf('Resident Evil') === 0) former.push({ game: c.game, category: c.cat, subcategory: sub, date: myBestRecord.date || null, timeSeconds: myBestRecord.times.primary_t, link: myBestRecord.weblink || null });
+          if (!stillHolds) former.push({ game: c.game, category: c.cat, subcategory: sub, date: myBestRecord.date || null, timeSeconds: myBestRecord.times.primary_t, link: myBestRecord.weblink || null });
         }
       }
     }

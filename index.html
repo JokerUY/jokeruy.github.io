@@ -196,9 +196,10 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
           <a class="btn is-yt" href="https://www.youtube.com/@jokeruy" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-youtube"/></svg>YouTube</a>
           <a class="btn" href="https://www.speedrun.com/users/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-src"/></svg>speedrun.com</a>
         </div>
-        <p class="status"><span class="st"><svg class="vbadge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#7B5CC8"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="status.tw">Twitch Partner desde abril de 2026</span></span><span class="st" data-i18n="status.yt">Partner de YouTube desde 2025</span></p>
+        <p class="status"><span class="st"><svg class="vbadge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#7B5CC8"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="status.tw">Twitch Partner desde abril de 2026</span></span><span class="st"><svg class="vbadge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#C2453D"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="status.yt">YouTube Partner desde 2025</span></span></p>
         <div class="datarow">
           <div class="datum" id="datum-wr" hidden><b id="d-wr"></b><span data-i18n="d.wr">récords mundiales actuales</span></div>
+          <div class="datum" id="datum-former" hidden><b id="d-former"></b><span data-i18n="d.former">ex récords mundiales</span></div>
         </div>
       </div>
     </div>
@@ -264,6 +265,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "status.tw": "Twitch Partner since April 2026",
     "status.yt": "YouTube Partner since 2025",
     "d.wr": "current world records",
+    "d.former": "former world records",
     "h.records": "World records",
     "records.text": "All my records and best times, with a link to each run, are on my speedrun.com profile.",
     "btn.profile": "View profile",
@@ -375,6 +377,9 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     // Cabecera: todos los records mundiales actuales de la cuenta (todos los juegos), vengan o no en el menu de abajo
     var total = st.worldRecords != null ? st.worldRecords : list.reduce(function (n, g) { return n + g.cur.length; }, 0);
     var dw = document.getElementById('d-wr'), db = document.getElementById('datum-wr'); if (dw && db) { dw.textContent = total; db.hidden = total === 0; }
+    // Ex records: la suma de todos los juegos (aunque el menu de abajo muestre solo Resident Evil)
+    var fN = FR ? (FR.records || []).length + (FR.manual || []).length : 0;
+    var fe = document.getElementById('d-former'), fb2 = document.getElementById('datum-former'); if (fe && fb2) { fe.textContent = fN; fb2.hidden = fN === 0; }
     var acc = document.getElementById('acc'); if (!acc) return;
     acc.querySelectorAll('details').forEach(function (d) { openGames[d.getAttribute('data-game')] = d.open; });
     acc.textContent = '';

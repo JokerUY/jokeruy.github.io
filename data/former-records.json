@@ -1,7 +1,15 @@
 {
-  "generatedAt": "2026-11-17T23:55:35.640Z",
+  "generatedAt": "2026-11-18T00:07:49.280Z",
   "note": "records = ex records detectados con el historial de speedrun.com (la run propia fue record en su momento y hoy ya no lo es). manual = lista que se completa a mano: { \"game\": \"\", \"category\": \"\", \"subcategory\": \"\", \"approximateDate\": \"texto libre\", \"link\": \"\" }.",
   "records": [
+    {
+      "game": "La Rana",
+      "category": "Any%",
+      "subcategory": null,
+      "date": "2025-12-10",
+      "timeSeconds": 123.833,
+      "link": "https://www.speedrun.com/la_rana/runs/ydog8gvz"
+    },
     {
       "game": "Resident Evil 4 (2023)",
       "category": "Separate Ways",
@@ -121,6 +129,14 @@
       "date": "2026-05-31",
       "timeSeconds": 5085,
       "link": "https://www.speedrun.com/RE9/runs/y4v0je2y"
+    },
+    {
+      "game": "Springy: A Bounce Adventure (Demo)",
+      "category": "Any%",
+      "subcategory": "Unrestricted",
+      "date": "2025-12-07",
+      "timeSeconds": 68.267,
+      "link": "https://www.speedrun.com/springy/runs/z0kljq8m"
     }
   ],
   "manual": []
