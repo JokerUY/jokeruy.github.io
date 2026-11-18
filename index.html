@@ -1,6 +1,6 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="icon" href="assets/avatar.jpg">
 <meta name="theme-color" content="#050609">
-<meta property="og:type" content="website"><meta property="og:title" content="JokerUY | Speedrunner de Resident Evil"><meta property="og:description" content="Speedrunner, organizador y comentarista de Resident Evil. Twitch Partner y YouTube Partner. Montevideo, Uruguay."><meta property="og:url" content="https://jokeruy.github.io/"><meta property="og:image" content="https://jokeruy.github.io/assets/avatar.jpg"><meta name="twitter:card" content="summary">
+<meta property="og:type" content="website"><meta property="og:title" content="JokerUY | Speedrunner de Resident Evil"><meta property="og:description" content="Speedrunner, organizador y comentarista de Resident Evil. Twitch Partner y YouTube Partner. Montevideo, Uruguay."><meta property="og:url" content="https://jokeruy.github.io/"><meta property="og:image" content="https://jokeruy.github.io/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="JokerUY, speedrunner de Resident Evil. 15 récords mundiales y Twitch Partner."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://jokeruy.github.io/assets/og-image.png">
 <title>JokerUY | Speedrunner de Resident Evil</title>
 <meta name="description" content="JokerUY: speedrunner de Resident Evil de Montevideo, Uruguay. Récords mundiales, torneos y canales.">
 <style>
@@ -117,6 +117,10 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 .aud-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .9rem; margin-bottom: .7rem; font-family: var(--f-type); }
 .aud-plat { font-weight: 700; color: var(--cream); letter-spacing: .06em; }
 .aud-period { font-size: .8rem; font-weight: 700; letter-spacing: .02em; color: #F2D78A; background: rgba(209, 174, 92, .12); border: 1px solid rgba(209, 174, 92, .55); padding: .06rem .6rem; }
+.collabs { list-style: none; margin: 0; padding: 0; font-family: var(--f-type); }
+.collabs li { padding: .55rem 0; border-bottom: 1px solid; border-image: linear-gradient(90deg, rgba(150, 165, 255, .28), rgba(150, 165, 255, .28) 86%, transparent) 1; }
+.collabs li:first-child { padding-top: 0; }
+.collabs li:last-child { border-bottom: 0; border-image: none; padding-bottom: 0; }
 .aud-note { margin: 1rem 0 0; font-family: var(--f-type); font-size: .74rem; color: var(--muted); }
 .aud-stats.five { grid-template-columns: repeat(5, 1fr); }
 .aud-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
@@ -226,10 +230,10 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
         <div class="aud-head"><span class="aud-plat">Twitch</span><span class="aud-period" id="a-tw-period"></span></div>
         <div class="aud-stats five">
           <div class="datum" id="datum-tw-total" hidden><b id="a-tw-total"></b><span data-i18n="a.tw.total">seguidores totales</span></div>
-          <div class="datum"><b id="a-tw-avg"></b><span data-i18n="a.avg">media de espectadores</span></div>
+          <div class="datum"><b id="a-tw-avg"></b><span data-i18n="a.avg">promedio de espectadores</span></div>
           <div class="datum" id="datum-tw-peak" hidden><b id="a-tw-peak"></b><span data-i18n="a.peak">espectadores máximos</span></div>
           <div class="datum"><b id="a-tw-follows"></b><span data-i18n="a.follows">nuevos seguidores</span></div>
-          <div class="datum"><b id="a-tw-hours"></b><span data-i18n="a.hours">tiempo emitido</span></div>
+          <div class="datum"><b id="a-tw-hours"></b><span data-i18n="a.hours">horas transmitidas</span></div>
         </div>
       </div>
       <div class="aud" id="aud-yt" hidden>
@@ -238,7 +242,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
           <div class="datum" id="datum-yt-total" hidden><b id="a-yt-total"></b><span data-i18n="a.yt.total">suscriptores totales</span></div>
           <div class="datum"><b id="a-yt-views"></b><span data-i18n="a.yt.views">visualizaciones</span></div>
           <div class="datum"><b id="a-yt-hours"></b><span data-i18n="a.yt.hours">horas de reproducción</span></div>
-          <div class="datum"><b id="a-yt-dur"></b><span data-i18n="a.yt.dur">duración promedio de las vistas</span></div>
+          <div class="datum"><b id="a-yt-dur"></b><span data-i18n="a.yt.dur">duración promedio por visualización</span></div>
         </div>
       </div>
       <p class="aud-note" id="aud-note" hidden></p>
@@ -288,6 +292,14 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       </div>
     </section>
 
+    <section class="sec" id="collabs">
+      <h2 data-i18n="h.collabs">Colaboraciones</h2>
+      <!-- Para sumar otra colaboracion: copiar un <li> con su texto y agregar la traduccion al ingles en el diccionario EN (clave collab.xxx) -->
+      <ul class="collabs">
+        <li data-i18n="collab.gfn">GeForce NOW Powered by ABYA: serie de shorts para YouTube (2026).</li>
+      </ul>
+    </section>
+
     <section class="sec" id="contact">
       <h2 data-i18n="h.contact">Contacto para colaboraciones</h2>
       <p data-i18n="ct.text">Para colaboraciones, escríbeme por mail.</p>
@@ -311,10 +323,10 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "a.yt.plat": "YouTube · Videos",
     "a.yt.views": "views",
     "a.yt.hours": "watch hours",
-    "a.yt.dur": "average view duration",
+    "a.yt.dur": "average duration per view",
     "a.peak": "peak viewers",
     "a.follows": "new followers",
-    "a.hours": "time streamed",
+    "a.hours": "hours streamed",
     "d.wr": "current world records",
     "d.former": "former world records",
     "h.records": "World records",
@@ -332,6 +344,8 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "ditman.p1": "A community-run international Resident Evil 4 speedrun tournament. I'm one of the organizers, I built the tournament website, and I won the 2026 edition.",
     "ditman.p2": "The 2027 edition starts in January, with qualifiers open from December 26.",
     "ditman.link": "See the Ditman Cup 2027 website",
+    "h.collabs": "Collaborations",
+    "collab.gfn": "GeForce NOW Powered by ABYA: YouTube shorts series (2026).",
     "h.contact": "Contact for collaborations",
     "ct.text": "For collaborations, send me an email."
   };

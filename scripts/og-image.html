@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<title>og-image</title>
+<!-- Fuente de assets/og-image.png (1200x630). Para regenerarla con Chrome desde la raiz del repo:
+chrome --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=4000 --screenshot=assets/og-image.png file:///RUTA/scripts/og-image.html -->
+<style>
+@font-face { font-family: 'Virgula Vulgaris'; src: url('../assets/VirgulaVulgaris-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Elegant Typewriter'; src: url('../assets/ElegantTypewriter-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Elegant Typewriter'; src: url('../assets/ElegantTypewriter-Bold.ttf') format('truetype'); font-weight: 700; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #07080C; }
+body { position: relative; font-family: 'Virgula Vulgaris', Georgia, serif; color: #F3EEDD; }
+.bg { position: absolute; inset: 0; background: linear-gradient(#0B0C11, #050608); }
+.frame { position: absolute; inset: 30px; padding: 12px; background: linear-gradient(145deg, #8A8466 0%, #4A4630 35%, #1E1C13 70%, #4A4630 100%); box-shadow: 0 10px 40px rgba(0, 0, 0, .7); }
+.card { position: relative; width: 100%; height: 100%; background: linear-gradient(160deg, #02000E, #010009); box-shadow: inset 0 0 0 1px #15143A, inset 0 0 60px rgba(0, 0, 20, .65); display: flex; align-items: center; gap: 44px; padding: 0 56px 18px; }
+.avatar { flex: none; width: 300px; height: 300px; overflow: hidden; border-radius: 50%; background: #050609; border: 9px solid #1E1C13; outline: 2px solid #8A8466; box-shadow: 0 14px 34px rgba(0, 0, 0, .7); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.5); transform-origin: 72% 20%; }
+.txt { min-width: 0; }
+h1 { margin: 0 0 6px; font-family: 'Elegant Typewriter', 'Courier New', monospace; font-weight: 700; font-size: 138px; line-height: 1.05; letter-spacing: .01em; display: inline-block; background: linear-gradient(90deg, #6FB0CC, #D1AE5C); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sub { margin: 0 0 28px; font-size: 40px; line-height: 1.2; color: #F3EEDD; white-space: nowrap; }
+.rule { height: 2px; width: 100%; margin-bottom: 28px; background: linear-gradient(90deg, rgba(150, 165, 255, .5), rgba(150, 165, 255, .05)); }
+.stat { display: flex; align-items: center; gap: 12px; font-family: 'Elegant Typewriter', 'Courier New', monospace; font-weight: 700; font-size: 28px; color: #D1AE5C; white-space: nowrap; }
+.stat .dot { color: #7E86A8; font-weight: 400; }
+.stat svg { width: 32px; height: 32px; flex: none; }
+.diamond { position: absolute; left: 56px; bottom: 46px; width: 14px; height: 14px; background: #B5271C; transform: rotate(45deg); }
+.url { position: absolute; right: 56px; bottom: 36px; font-family: 'Elegant Typewriter', 'Courier New', monospace; font-size: 26px; color: #A7AEC8; }
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="frame"><div class="card">
+  <div class="avatar"><img src="../assets/avatar.jpg" alt=""></div>
+  <div class="txt">
+    <h1>JokerUY</h1>
+    <p class="sub">Speedrunner de Resident Evil</p>
+    <div class="rule"></div>
+    <div class="stat">
+      <span>15 récords mundiales</span><span class="dot">·</span>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#7B5CC8"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Twitch Partner</span>
+    </div>
+  </div>
+  <div class="diamond"></div>
+  <div class="url">jokeruy.github.io</div>
+</div></div>
+</body></html>
