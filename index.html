@@ -119,6 +119,8 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 .aud-period { font-size: .78rem; color: var(--muted); }
 .aud-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
 .aud-stats .datum b { font-size: 1.6rem; }
+.aud + .aud { margin-top: 1.4rem; }
+.aud-stats.three { grid-template-columns: repeat(3, 1fr); }
 
 /* ---------- Acordeon de records por juego ---------- */
 .acc { display: block; }
@@ -169,6 +171,9 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
   .aud-stats { grid-template-columns: repeat(2, 1fr); row-gap: .9rem; }
   .aud-stats .datum:nth-child(odd) { border-left: 0; padding-left: 0; }
   .aud-stats .datum:nth-child(even) { padding-left: .8rem; }
+  .aud-stats.three { grid-template-columns: repeat(3, 1fr); row-gap: 0; }
+  .aud-stats.three .datum { padding-left: .5rem; border-left: 1px solid var(--line); }
+  .aud-stats.three .datum:first-child { padding-left: 0; border-left: 0; }
   .rec { grid-template-columns: 1fr auto; }
   .rec-cat { grid-column: 1 / -1; }
   .sec-row { justify-content: center; text-align: center; }
@@ -224,6 +229,14 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
           <div class="datum" id="datum-tw-peak" hidden><b id="a-tw-peak"></b><span data-i18n="a.peak">espectadores máximos</span></div>
           <div class="datum"><b id="a-tw-follows"></b><span data-i18n="a.follows">nuevos seguidores</span></div>
           <div class="datum"><b id="a-tw-hours"></b><span data-i18n="a.hours">tiempo emitido</span></div>
+        </div>
+      </div>
+      <div class="aud" id="aud-yt" hidden>
+        <div class="aud-head"><span class="aud-plat" data-i18n="a.yt.plat">YouTube · Videos</span><span class="aud-period" id="a-yt-period"></span></div>
+        <div class="aud-stats three">
+          <div class="datum"><b id="a-yt-views"></b><span data-i18n="a.yt.views">visualizaciones</span></div>
+          <div class="datum"><b id="a-yt-hours"></b><span data-i18n="a.yt.hours">horas de reproducción</span></div>
+          <div class="datum"><b id="a-yt-dur"></b><span data-i18n="a.yt.dur">duración promedio de las vistas</span></div>
         </div>
       </div>
     </section>
@@ -290,6 +303,10 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "status.yt": "YouTube Partner since 2025",
     "h.audience": "Audience",
     "a.avg": "average viewers",
+    "a.yt.plat": "YouTube · Videos",
+    "a.yt.views": "views",
+    "a.yt.hours": "watch hours",
+    "a.yt.dur": "average view duration",
     "a.peak": "peak viewers",
     "a.follows": "new followers",
     "a.hours": "time streamed",
@@ -369,11 +386,12 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
   }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   var AUD = null;
-  function fmtN(n) { return new Intl.NumberFormat(curLang() === 'en' ? 'en-US' : 'es-UY', { useGrouping: 'always' }).format(n); }
+  function fmtN(n, d) { return new Intl.NumberFormat(curLang() === 'en' ? 'en-US' : 'es-UY', { useGrouping: 'always', maximumFractionDigits: d || 0 }).format(n); }
   function fmtRange(a, b, days) {
     var loc = curLang() === 'en' ? 'en-US' : 'es-UY', u = { timeZone: 'UTC' };
     var d1 = new Date(a + 'T00:00:00Z'), d2 = new Date(b + 'T00:00:00Z');
-    var s = new Intl.DateTimeFormat(loc, Object.assign({ day: 'numeric', month: 'short' }, u)).format(d1) + ' – ' + new Intl.DateTimeFormat(loc, Object.assign({ day: 'numeric', month: 'short', year: 'numeric' }, u)).format(d2);
+    var o1 = { day: 'numeric', month: 'short' }; if (d1.getUTCFullYear() !== d2.getUTCFullYear()) o1.year = 'numeric';
+    var s = new Intl.DateTimeFormat(loc, Object.assign(o1, u)).format(d1) + ' – ' + new Intl.DateTimeFormat(loc, Object.assign({ day: 'numeric', month: 'short', year: 'numeric' }, u)).format(d2);
     return days ? s + ' (' + days + (curLang() === 'en' ? ' days)' : ' días)') : s;
   }
   function renderAudience() {
@@ -387,6 +405,15 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       set('a-tw-follows', t.newFollows != null ? fmtN(t.newFollows) : '–');
       set('a-tw-hours', t.hoursStreamed != null ? fmtN(t.hoursStreamed) + ' h' + (t.minutesStreamed ? ' ' + t.minutesStreamed + ' min' : '') : '–');
       blk.hidden = false; any = true;
+    }
+    var y = AUD.youtube, yb = document.getElementById('aud-yt');
+    if (y && y.views != null && yb) {
+      var sy = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
+      sy('a-yt-period', y.from && y.to ? fmtRange(y.from, y.to, y.days) : '');
+      sy('a-yt-views', fmtN(y.views));
+      sy('a-yt-hours', y.watchHours != null ? fmtN(y.watchHours, 1) : '–');
+      sy('a-yt-dur', y.averageViewDuration || '–');
+      yb.hidden = false; any = true;
     }
     if (sec) sec.hidden = !any;
   }

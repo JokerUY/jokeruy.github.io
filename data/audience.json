@@ -11,5 +11,13 @@
     "minutesStreamed": 51,
     "source": "Panel de estadisticas de Twitch (Creator Dashboard)"
   },
-  "youtube": null
+  "youtube": {
+    "from": "2025-11-17",
+    "to": "2026-11-16",
+    "days": 365,
+    "views": 515080,
+    "watchHours": 94522.8,
+    "averageViewDuration": "12:20",
+    "source": "YouTube Studio, Analytics, solo videos (no vivos), ultimos 365 dias"
+  }
 }
