@@ -132,6 +132,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 .rec-cat { font-size: .9rem; color: var(--cream); min-width: 0; }
 .rec-sub { display: block; font-size: .72rem; color: var(--muted); }
 .rec-tag { display: inline-block; margin-left: .5rem; padding: 0 .4rem; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border: 1px solid #5A6086; vertical-align: .1em; }
+.rec-tag.top { color: #0B0C11; border-color: #C5C9D4; background: linear-gradient(#EEF0F5, #A9ADBA); font-weight: 700; }
 .rec-time { font-size: .95rem; font-weight: 700; color: var(--gold); white-space: nowrap; }
 .rec-time a { color: inherit; text-decoration-color: rgba(209, 174, 92, .45); text-underline-offset: 3px; }
 .rec-date { font-size: .78rem; color: var(--muted); white-space: nowrap; }
@@ -314,9 +315,11 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
   document.getElementById('mail-link').addEventListener('click', copyMail);
   // Records: salen de data/speedrun.json y data/former-records.json (los genera scripts/update-speedrun.js). Si no cargan, queda el texto con el link al perfil.
   var FR = null, openGames = {};
+  var HIDE_GAMES = ['Resident Evil CODE: Madman'];      // juegos que no se muestran
+  var TOP_GAMES = ['Resident Evil 3: Nemesis'];        // juegos que se muestran por su mejor puesto (Top 2 o Top 3)
   var TX = {
-    es: { cur: 'Récords actuales', former: 'Ex récords mundiales', tag: 'Ex récord mundial', curN: function (n) { return n + (n === 1 ? ' récord actual' : ' récords actuales'); }, formerN: function (n) { return n + (n === 1 ? ' ex récord' : ' ex récords'); } },
-    en: { cur: 'Current records', former: 'Former world records', tag: 'Former world record', curN: function (n) { return n + (n === 1 ? ' current record' : ' current records'); }, formerN: function (n) { return n + (n === 1 ? ' former record' : ' former records'); } }
+    es: { tops: 'Mejores puestos', cur: 'Récords actuales', former: 'Ex récords mundiales', tag: 'Ex récord mundial', curN: function (n) { return n + (n === 1 ? ' récord actual' : ' récords actuales'); }, formerN: function (n) { return n + (n === 1 ? ' ex récord' : ' ex récords'); } },
+    en: { tops: 'Best placements', cur: 'Current records', former: 'Former world records', tag: 'Former world record', curN: function (n) { return n + (n === 1 ? ' current record' : ' current records'); }, formerN: function (n) { return n + (n === 1 ? ' former record' : ' former records'); } }
   };
   function curLang() { return document.documentElement.lang === 'en' ? 'en' : 'es'; }
   function fmtTime(sec) {
@@ -331,10 +334,14 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     return new Intl.DateTimeFormat(curLang() === 'en' ? 'en-US' : 'es-UY', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(d);
   }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-  function recRow(r, isFormer) {
-    var T = TX[curLang()], row = el('div', 'rec'), cat = el('div', 'rec-cat', r.category);
+  function recRow(r, isFormer, isTop) {
+    var T = TX[curLang()], row = el('div', 'rec');
+    // En los mejores puestos se muestra primero la subcategoria (por ejemplo Any%) y debajo la categoria
+    var main = isTop && r.subcategory ? r.subcategory : r.category, small = isTop ? (r.subcategory ? r.category : null) : r.subcategory;
+    var cat = el('div', 'rec-cat', main);
     if (isFormer) cat.appendChild(el('span', 'rec-tag', T.tag));
-    if (r.subcategory) cat.appendChild(el('span', 'rec-sub', r.subcategory));
+    if (isTop) cat.appendChild(el('span', 'rec-tag top', 'Top ' + r.place));
+    if (small) cat.appendChild(el('span', 'rec-sub', small));
     row.appendChild(cat);
     var tm = el('div', 'rec-time');
     if (r.timeSeconds != null) {
@@ -350,14 +357,21 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     var st = SR.stats || {};
     // Datos de la cabecera
     var setD = function (id, box, v) { var e = document.getElementById(id), b = document.getElementById(box); if (e && b && v != null) { e.textContent = v; b.hidden = false; } };
-    setD('d-wr', 'datum-wr', st.worldRecords);
     // Un item por juego (solo Resident Evil), con sus records actuales y ex records
     var games = {};
-    function G(name) { return games[name] || (games[name] = { name: name, cur: [], former: [] }); }
-    (SR.personalBests || []).forEach(function (p) { if (p.worldRecord && p.game.indexOf('Resident Evil') === 0) G(p.game).cur.push(p); });
-    if (FR) (FR.records || []).concat(FR.manual || []).forEach(function (r) { if (r && r.game && r.game.indexOf('Resident Evil') === 0) G(r.game).former.push(r); });
+    function G(name) { return games[name] || (games[name] = { name: name, cur: [], former: [], tops: [] }); }
+    var shown = function (name) { return name.indexOf('Resident Evil') === 0 && HIDE_GAMES.indexOf(name) < 0; };
+    (SR.personalBests || []).forEach(function (p) {
+      if (!shown(p.game)) return;
+      if (p.worldRecord) G(p.game).cur.push(p);
+      else if (TOP_GAMES.indexOf(p.game) >= 0 && p.place >= 2 && p.place <= 3) G(p.game).tops.push(p);
+    });
+    if (FR) (FR.records || []).concat(FR.manual || []).forEach(function (r) { if (r && r.game && shown(r.game)) G(r.game).former.push(r); });
     var list = Object.keys(games).map(function (k) { return games[k]; });
-    list.sort(function (a, b) { return (b.cur.length - a.cur.length) || (b.former.length - a.former.length) || a.name.localeCompare(b.name); });
+    list.sort(function (a, b) { return (b.cur.length - a.cur.length) || (b.former.length - a.former.length) || (b.tops.length - a.tops.length) || a.name.localeCompare(b.name); });
+    // El numero de la cabecera cuenta solo los records que se muestran abajo
+    var total = list.reduce(function (n, g) { return n + g.cur.length; }, 0);
+    var dw = document.getElementById('d-wr'), db = document.getElementById('datum-wr'); if (dw && db) { dw.textContent = total; db.hidden = total === 0; }
     var acc = document.getElementById('acc'); if (!acc) return;
     acc.querySelectorAll('details').forEach(function (d) { openGames[d.getAttribute('data-game')] = d.open; });
     acc.textContent = '';
@@ -371,10 +385,12 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       var counts = [];
       if (g.cur.length) counts.push(T.curN(g.cur.length));
       if (g.former.length) counts.push(T.formerN(g.former.length));
+      if (g.tops.length) counts.push('Top ' + Math.min.apply(null, g.tops.map(function (p) { return p.place; })));
       title.appendChild(el('span', 'acc-count', counts.join(' · ')));
       sum.appendChild(title); det.appendChild(sum);
       var body = el('div', 'acc-body');
       if (g.cur.length) { var c = el('div', 'acc-group'); c.appendChild(el('h3', null, T.cur)); g.cur.forEach(function (r) { c.appendChild(recRow(r, false)); }); body.appendChild(c); }
+      if (g.tops.length) { var tp = el('div', 'acc-group'); tp.appendChild(el('h3', null, T.tops)); g.tops.forEach(function (r) { tp.appendChild(recRow(r, false, true)); }); body.appendChild(tp); }
       if (g.former.length) { var f = el('div', 'acc-group'); f.appendChild(el('h3', null, T.former)); g.former.forEach(function (r) { f.appendChild(recRow(r, true)); }); body.appendChild(f); }
       det.appendChild(body); acc.appendChild(det);
     });
