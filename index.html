@@ -162,7 +162,7 @@ h1 { margin: 0 0 .3rem; font-family: var(--f-serif); font-weight: 700; font-size
 .dc-btn { display: inline-block; margin-top: .3rem; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; text-decoration: none; color: #EDE7D6; background: #7E221B; border: 1px solid #7E221B; padding: .55rem 1.1rem; transition: background .15s, border-color .15s; }
 .dc-btn:hover { background: #9A2A21; border-color: #9A2A21; }
 .mail-msg { margin-left: .8rem; font-family: var(--f-type); font-size: .8rem; color: var(--muted); }
-#mail-link { text-transform: none; letter-spacing: .02em; font-family: var(--f-type); font-size: .95rem; overflow-wrap: anywhere; }
+.btn-handle, #mail-link { text-transform: none; letter-spacing: .02em; font-family: var(--f-type); font-size: .95rem; overflow-wrap: anywhere; }
 
 @media (max-width: 640px) {
   html { font-size: 106%; }
@@ -194,6 +194,7 @@ h1 { margin: 0 0 .3rem; font-family: var(--f-serif); font-weight: 700; font-size
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="ic-twitch" viewBox="0 0 24 24"><path fill="currentColor" d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></symbol>
   <symbol id="ic-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol>
+  <symbol id="ic-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></symbol>
   <symbol id="ic-src" viewBox="0 0 24 24"><path fill="currentColor" d="M5 3h14v2h3v3a5 5 0 0 1-4.4 4.96A6 6 0 0 1 13 16.9V19h3v2H8v-2h3v-2.1a6 6 0 0 1-4.6-3.94A5 5 0 0 1 2 8V5h3V3zm0 4H4v1a3 3 0 0 0 1.1 2.3A6 6 0 0 1 5 9V7zm14 0v2a6 6 0 0 1-.1 1.3A3 3 0 0 0 20 8V7h-1z"/></symbol>
 </svg>
 
@@ -306,6 +307,7 @@ h1 { margin: 0 0 .3rem; font-family: var(--f-serif); font-weight: 700; font-size
       <h2 data-i18n="h.contact">Contacto para colaboraciones</h2>
       <p data-i18n="ct.text">Para colaboraciones, escríbeme por mail.</p>
       <p><button type="button" class="btn" id="mail-link"><span id="mail-text"></span></button><span class="mail-msg" id="mail-msg" aria-live="polite"></span></p>
+      <p><a class="btn btn-handle" href="https://www.instagram.com/nicolasperezg15/" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-ig"/></svg>@nicolasperezg15</a></p>
     </section>
 
   </div></div>
