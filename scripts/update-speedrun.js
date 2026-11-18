@@ -160,6 +160,9 @@ async function getAll(url) {
     for (const h of history) perGame[h.game] = (perGame[h.game] || 0) + h.recordsSet;
     out.recordHistory = { method: 'Runs verificadas ordenadas por fecha; cuenta cada vez que una run propia bate el mejor tiempo anterior de su leaderboard.', perGame };
     // Total en juegos de Resident Evil (los demas juegos no se suman a la cifra publica)
+    // Todos los juegos: records logrados en total y ex records (los logrados que ya no estan vigentes)
+    out.stats.worldRecordsSetAllGames = Object.values(perGame).reduce((x, n) => x + n, 0);
+    out.stats.formerWorldRecords = Math.max(0, out.stats.worldRecordsSetAllGames - out.stats.worldRecords);
     out.stats.worldRecordsAllTime = Object.entries(perGame).filter(([g]) => g.indexOf('Resident Evil') === 0).reduce((a, [, n]) => a + n, 0);
 
     // data/former-records.json: ex records detectados en el historial + lista "manual" que se completa a mano (se conserva al regenerar)

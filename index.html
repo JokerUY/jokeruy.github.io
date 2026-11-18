@@ -377,8 +377,8 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     // Cabecera: todos los records mundiales actuales de la cuenta (todos los juegos), vengan o no en el menu de abajo
     var total = st.worldRecords != null ? st.worldRecords : list.reduce(function (n, g) { return n + g.cur.length; }, 0);
     var dw = document.getElementById('d-wr'), db = document.getElementById('datum-wr'); if (dw && db) { dw.textContent = total; db.hidden = total === 0; }
-    // Ex records: la suma de todos los juegos (aunque el menu de abajo muestre solo Resident Evil)
-    var fN = FR ? (FR.records || []).length + (FR.manual || []).length : 0;
+    // Ex records: records logrados en total (todos los juegos) menos los vigentes
+    var fN = st.formerWorldRecords != null ? st.formerWorldRecords : (FR ? (FR.records || []).length + (FR.manual || []).length : 0);
     var fe = document.getElementById('d-former'), fb2 = document.getElementById('datum-former'); if (fe && fb2) { fe.textContent = fN; fb2.hidden = fN === 0; }
     var acc = document.getElementById('acc'); if (!acc) return;
     acc.querySelectorAll('details').forEach(function (d) { openGames[d.getAttribute('data-game')] = d.open; });
