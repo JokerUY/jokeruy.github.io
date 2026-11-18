@@ -117,7 +117,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 .aud-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .9rem; margin-bottom: .7rem; font-family: var(--f-type); }
 .aud-plat { font-weight: 700; color: var(--cream); letter-spacing: .06em; }
 .aud-period { font-size: .78rem; color: var(--muted); }
-.aud-stats { display: grid; grid-template-columns: repeat(3, 1fr); }
+.aud-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
 .aud-stats .datum b { font-size: 1.6rem; }
 
 /* ---------- Acordeon de records por juego ---------- */
@@ -166,6 +166,9 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
   .datum b.txt { font-size: 1rem; line-height: 1.9rem; }
   .datum span { font-size: .7rem; }
   .aud-stats .datum b { font-size: 1.25rem; }
+  .aud-stats { grid-template-columns: repeat(2, 1fr); row-gap: .9rem; }
+  .aud-stats .datum:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .aud-stats .datum:nth-child(even) { padding-left: .8rem; }
   .rec { grid-template-columns: 1fr auto; }
   .rec-cat { grid-column: 1 / -1; }
   .sec-row { justify-content: center; text-align: center; }
@@ -218,6 +221,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
         <div class="aud-head"><span class="aud-plat">Twitch</span><span class="aud-period" id="a-tw-period"></span></div>
         <div class="aud-stats">
           <div class="datum"><b id="a-tw-avg"></b><span data-i18n="a.avg">media de espectadores</span></div>
+          <div class="datum" id="datum-tw-peak" hidden><b id="a-tw-peak"></b><span data-i18n="a.peak">espectadores máximos</span></div>
           <div class="datum"><b id="a-tw-follows"></b><span data-i18n="a.follows">nuevos seguidores</span></div>
           <div class="datum"><b id="a-tw-hours"></b><span data-i18n="a.hours">tiempo emitido</span></div>
         </div>
@@ -286,6 +290,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "status.yt": "YouTube Partner since 2025",
     "h.audience": "Audience",
     "a.avg": "average viewers",
+    "a.peak": "peak viewers",
     "a.follows": "new followers",
     "a.hours": "time streamed",
     "d.wr": "current world records",
@@ -378,6 +383,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
       set('a-tw-period', t.from && t.to ? fmtRange(t.from, t.to, t.days) : '');
       set('a-tw-avg', fmtN(t.averageViewers));
+      var pk = document.getElementById('datum-tw-peak'); if (pk) { pk.hidden = t.peakViewers == null; if (t.peakViewers != null) set('a-tw-peak', fmtN(t.peakViewers)); }
       set('a-tw-follows', t.newFollows != null ? fmtN(t.newFollows) : '–');
       set('a-tw-hours', t.hoursStreamed != null ? fmtN(t.hoursStreamed) + ' h' + (t.minutesStreamed ? ' ' + t.minutesStreamed + ' min' : '') : '–');
       blk.hidden = false; any = true;
