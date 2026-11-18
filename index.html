@@ -372,8 +372,8 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     if (FR) (FR.records || []).concat(FR.manual || []).forEach(function (r) { if (r && r.game && shown(r.game)) G(r.game).former.push(r); });
     var list = Object.keys(games).map(function (k) { return games[k]; });
     list.sort(function (a, b) { return (b.cur.length - a.cur.length) || (b.former.length - a.former.length) || (b.tops.length - a.tops.length) || a.name.localeCompare(b.name); });
-    // El numero de la cabecera cuenta solo los records que se muestran abajo
-    var total = list.reduce(function (n, g) { return n + g.cur.length; }, 0);
+    // Cabecera: todos los records mundiales actuales de la cuenta (todos los juegos), vengan o no en el menu de abajo
+    var total = st.worldRecords != null ? st.worldRecords : list.reduce(function (n, g) { return n + g.cur.length; }, 0);
     var dw = document.getElementById('d-wr'), db = document.getElementById('datum-wr'); if (dw && db) { dw.textContent = total; db.hidden = total === 0; }
     var acc = document.getElementById('acc'); if (!acc) return;
     acc.querySelectorAll('details').forEach(function (d) { openGames[d.getAttribute('data-game')] = d.open; });
