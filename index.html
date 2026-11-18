@@ -113,6 +113,13 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 .li-place.p2 { color: #0B0C11; background: linear-gradient(#EEF0F5, #A9ADBA); border-color: #C5C9D4; }
 .li-prize { font-size: .95rem; font-weight: 700; color: var(--cream); white-space: nowrap; }
 
+/* ---------- Audiencia ---------- */
+.aud-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .9rem; margin-bottom: .7rem; font-family: var(--f-type); }
+.aud-plat { font-weight: 700; color: var(--cream); letter-spacing: .06em; }
+.aud-period { font-size: .78rem; color: var(--muted); }
+.aud-stats { display: grid; grid-template-columns: repeat(3, 1fr); }
+.aud-stats .datum b { font-size: 1.6rem; }
+
 /* ---------- Acordeon de records por juego ---------- */
 .acc { display: block; }
 .acc details { border-bottom: 1px solid var(--line); }
@@ -158,6 +165,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
   .datum b { font-size: 1.35rem; }
   .datum b.txt { font-size: 1rem; line-height: 1.9rem; }
   .datum span { font-size: .7rem; }
+  .aud-stats .datum b { font-size: 1.25rem; }
   .rec { grid-template-columns: 1fr auto; }
   .rec-cat { grid-column: 1 / -1; }
   .sec-row { justify-content: center; text-align: center; }
@@ -203,6 +211,18 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
         </div>
       </div>
     </div>
+
+    <section class="sec" id="audience" hidden>
+      <h2 data-i18n="h.audience">Audiencia</h2>
+      <div class="aud" id="aud-twitch" hidden>
+        <div class="aud-head"><span class="aud-plat">Twitch</span><span class="aud-period" id="a-tw-period"></span></div>
+        <div class="aud-stats">
+          <div class="datum"><b id="a-tw-avg"></b><span data-i18n="a.avg">media de espectadores</span></div>
+          <div class="datum"><b id="a-tw-follows"></b><span data-i18n="a.follows">nuevos seguidores</span></div>
+          <div class="datum"><b id="a-tw-hours"></b><span data-i18n="a.hours">tiempo emitido</span></div>
+        </div>
+      </div>
+    </section>
 
     <section class="sec" id="records">
       <div class="sec-row sec-head">
@@ -264,6 +284,10 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "tagline.loc": "Montevideo, Uruguay",
     "status.tw": "Twitch Partner since April 2026",
     "status.yt": "YouTube Partner since 2025",
+    "h.audience": "Audience",
+    "a.avg": "average viewers",
+    "a.follows": "new followers",
+    "a.hours": "time streamed",
     "d.wr": "current world records",
     "d.former": "former world records",
     "h.records": "World records",
@@ -339,6 +363,27 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     return new Intl.DateTimeFormat(curLang() === 'en' ? 'en-US' : 'es-UY', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(d);
   }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  var AUD = null;
+  function fmtN(n) { return new Intl.NumberFormat(curLang() === 'en' ? 'en-US' : 'es-UY', { useGrouping: 'always' }).format(n); }
+  function fmtRange(a, b, days) {
+    var loc = curLang() === 'en' ? 'en-US' : 'es-UY', u = { timeZone: 'UTC' };
+    var d1 = new Date(a + 'T00:00:00Z'), d2 = new Date(b + 'T00:00:00Z');
+    var s = new Intl.DateTimeFormat(loc, Object.assign({ day: 'numeric', month: 'short' }, u)).format(d1) + ' – ' + new Intl.DateTimeFormat(loc, Object.assign({ day: 'numeric', month: 'short', year: 'numeric' }, u)).format(d2);
+    return days ? s + ' (' + days + (curLang() === 'en' ? ' days)' : ' días)') : s;
+  }
+  function renderAudience() {
+    if (!AUD) return;
+    var t = AUD.twitch, any = false, sec = document.getElementById('audience'), blk = document.getElementById('aud-twitch');
+    if (t && t.averageViewers != null && blk) {
+      var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
+      set('a-tw-period', t.from && t.to ? fmtRange(t.from, t.to, t.days) : '');
+      set('a-tw-avg', fmtN(t.averageViewers));
+      set('a-tw-follows', t.newFollows != null ? fmtN(t.newFollows) : '–');
+      set('a-tw-hours', t.hoursStreamed != null ? fmtN(t.hoursStreamed) + ' h' + (t.minutesStreamed ? ' ' + t.minutesStreamed + ' min' : '') : '–');
+      blk.hidden = false; any = true;
+    }
+    if (sec) sec.hidden = !any;
+  }
   function recRow(r, isFormer, isTop) {
     var T = TX[curLang()], row = el('div', 'rec');
     // En los mejores puestos se muestra primero la subcategoria (por ejemplo Any%) y debajo la categoria
@@ -412,11 +457,13 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     try { localStorage.setItem('jokeruy-lang', l); } catch (e) {}
     setMail();
     renderRecords();
+    renderAudience();
   }
   document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.lang); }); });
   function loadJson(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : Promise.reject(); }); }
   loadJson('data/speedrun.json').then(function (j) { SR = j; return loadJson('data/former-records.json').catch(function () { return null; }); })
     .then(function (f) { FR = f; renderRecords(); }).catch(function () {});
+  loadJson('data/audience.json').then(function (a) { AUD = a; renderAudience(); }).catch(function () {});
   setMail();
   var saved = null;
   try { saved = localStorage.getItem('jokeruy-lang'); } catch (e) {}

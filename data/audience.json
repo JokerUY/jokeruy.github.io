@@ -1,0 +1,14 @@
+{
+  "_ayuda": "Estadisticas de audiencia que muestra la pagina. Se editan a mano: from/to son fechas del periodo (AAAA-MM-DD), days los dias del periodo. Para agregar YouTube, reemplazar null por un objeto con averageViewers, views, watchHours, etc. y avisar para mostrarlo.",
+  "twitch": {
+    "from": "2026-03-10",
+    "to": "2026-11-17",
+    "days": 253,
+    "averageViewers": 163,
+    "newFollows": 2963,
+    "hoursStreamed": 785,
+    "minutesStreamed": 51,
+    "source": "Panel de estadisticas de Twitch (Creator Dashboard)"
+  },
+  "youtube": null
+}
