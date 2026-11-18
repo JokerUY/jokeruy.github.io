@@ -82,8 +82,8 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
 
 /* Fila de datos */
 .datarow { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin-top: 1rem; padding-top: .9rem; border-top: 1px solid var(--line); }
-.datum { text-align: center; padding: 0 .6rem; border-left: 1px solid var(--line); min-width: 0; }
-.datum:first-child { border-left: 0; }
+.datum { text-align: left; padding: 0 .6rem; border-left: 1px solid var(--line); min-width: 0; }
+.datum:first-child { border-left: 0; padding-left: 0; }
 .datum b { display: block; font-family: var(--f-type); font-size: 1.7rem; line-height: 1.2; color: var(--gold); }
 .datum b.txt { font-size: 1.15rem; line-height: 2.1rem; }
 .datum span { display: block; font-family: var(--f-type); font-size: .78rem; color: var(--muted); }
@@ -151,6 +151,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
   .head { grid-template-columns: 1fr; justify-items: center; text-align: center; }
   .links { justify-content: center; }
   .dc { justify-content: center; text-align: center; }
+  .datum { text-align: center; }
   .datum b { font-size: 1.35rem; }
   .datum b.txt { font-size: 1rem; line-height: 1.9rem; }
   .datum span { font-size: .7rem; }
@@ -195,8 +196,6 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
         <p class="status" data-i18n="status">Twitch Partner desde abril de 2026 · Partner de YouTube</p>
         <div class="datarow">
           <div class="datum" id="datum-wr" hidden><b id="d-wr"></b><span data-i18n="d.wr">récords mundiales actuales</span></div>
-          <div class="datum" id="datum-runs" hidden><b id="d-runs"></b><span data-i18n="d.runs">runs verificadas</span></div>
-          <div class="datum"><b class="txt" data-i18n="d.champ">Campeón</b><span>Ditman Cup 2026</span></div>
         </div>
       </div>
     </div>
@@ -261,8 +260,6 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     "tagline.loc": "Montevideo, Uruguay",
     "status": "Twitch Partner since April 2026 · YouTube Partner",
     "d.wr": "current world records",
-    "d.runs": "verified runs",
-    "d.champ": "Champion",
     "h.records": "World records",
     "records.text": "All my records and best times, with a link to each run, are on my speedrun.com profile.",
     "btn.profile": "View profile",
@@ -353,7 +350,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
     var st = SR.stats || {};
     // Datos de la cabecera
     var setD = function (id, box, v) { var e = document.getElementById(id), b = document.getElementById(box); if (e && b && v != null) { e.textContent = v; b.hidden = false; } };
-    setD('d-wr', 'datum-wr', st.worldRecords); setD('d-runs', 'datum-runs', st.verifiedRuns);
+    setD('d-wr', 'datum-wr', st.worldRecords);
     // Un item por juego (solo Resident Evil), con sus records actuales y ex records
     var games = {};
     function G(name) { return games[name] || (games[name] = { name: name, cur: [], former: [] }); }
