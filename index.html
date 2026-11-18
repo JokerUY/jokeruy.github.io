@@ -409,7 +409,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       var tt = document.getElementById('datum-tw-total'); if (tt) { tt.hidden = t.totalFollowers == null; if (t.totalFollowers != null) set('a-tw-total', fmtN(t.totalFollowers)); }
       var pk = document.getElementById('datum-tw-peak'); if (pk) { pk.hidden = t.peakViewers == null; if (t.peakViewers != null) set('a-tw-peak', fmtN(t.peakViewers)); }
       set('a-tw-follows', t.newFollows != null ? fmtN(t.newFollows) : '–');
-      set('a-tw-hours', t.hoursStreamed != null ? fmtN(t.hoursStreamed) + ' h' + (t.minutesStreamed ? ' ' + t.minutesStreamed + ' min' : '') : '–');
+      set('a-tw-hours', t.hoursStreamed != null ? fmtN(Math.round(t.hoursStreamed + (t.minutesStreamed || 0) / 60)) + ' h' : '–');
       blk.hidden = false; any = true;
     }
     var y = AUD.youtube, yb = document.getElementById('aud-yt');
@@ -418,7 +418,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
       sy('a-yt-period', y.from && y.to ? fmtRange(y.from, y.to, y.days) : '');
       sy('a-yt-views', fmtN(y.views));
       var yt2 = document.getElementById('datum-yt-total'); if (yt2) { yt2.hidden = y.totalSubscribers == null; if (y.totalSubscribers != null) sy('a-yt-total', fmtN(y.totalSubscribers)); }
-      sy('a-yt-hours', y.watchHours != null ? fmtN(y.watchHours, 1) : '–');
+      sy('a-yt-hours', y.watchHours != null ? fmtN(y.watchHours) : '–');
       sy('a-yt-dur', y.averageViewDuration || '–');
       yb.hidden = false; any = true;
     }
