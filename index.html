@@ -67,6 +67,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size: clamp(2.4rem, 8vw, 3.7rem); letter-spacing: .01em; line-height: 1.05; display: inline-block; background: linear-gradient(90deg, #6FB0CC, #D1AE5C); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 0 rgba(0, 0, 0, .55)); }
 .tagline { margin: 0 0 .9rem; font-size: 1.05rem; }
 .links { display: flex; gap: .55rem; flex-wrap: wrap; }
+.status .st { display: block; }
+.vbadge { width: 1.05em; height: 1.05em; vertical-align: -.18em; margin-right: .45rem; }
 .status { margin: .9rem 0 0; font-family: var(--f-type); font-size: .85rem; color: var(--muted); }
 
 /* ---------- Secciones: lineas finas, sin cajas dentro de cajas ---------- */
@@ -194,7 +196,7 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
           <a class="btn is-yt" href="https://www.youtube.com/@jokeruy" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-youtube"/></svg>YouTube</a>
           <a class="btn" href="https://www.speedrun.com/users/JokerUY" target="_blank" rel="noopener"><svg class="ic"><use href="#ic-src"/></svg>speedrun.com</a>
         </div>
-        <p class="status" data-i18n="status">Twitch Partner desde abril de 2026 · Partner de YouTube</p>
+        <p class="status"><span class="st"><svg class="vbadge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#7B5CC8"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="status.tw">Twitch Partner desde abril de 2026</span></span><span class="st" data-i18n="status.yt">Partner de YouTube desde 2025</span></p>
         <div class="datarow">
           <div class="datum" id="datum-wr" hidden><b id="d-wr"></b><span data-i18n="d.wr">récords mundiales actuales</span></div>
         </div>
@@ -259,7 +261,8 @@ h1 { margin: 0 0 .25rem; font-family: var(--f-type); font-weight: 700; font-size
   var EN = {
     "tagline": "Resident Evil speedrunner, organizer and commentator",
     "tagline.loc": "Montevideo, Uruguay",
-    "status": "Twitch Partner since April 2026 · YouTube Partner",
+    "status.tw": "Twitch Partner since April 2026",
+    "status.yt": "YouTube Partner since 2025",
     "d.wr": "current world records",
     "h.records": "World records",
     "records.text": "All my records and best times, with a link to each run, are on my speedrun.com profile.",
